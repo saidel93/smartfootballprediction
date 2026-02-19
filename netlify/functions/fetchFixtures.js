@@ -1,9 +1,7 @@
 // netlify/functions/fetchFixtures.js
-// ============================================================
-// FETCH FIXTURES FROM API-SPORTS (Football)
-// ============================================================
 
 const { connectToDatabase } = require('./utils/mongodb');
+const https = require('https');
 
 exports.handler = async (event) => {
 
@@ -12,16 +10,16 @@ exports.handler = async (event) => {
   }
 
   try {
+
     const API_KEY = process.env.FOOTBALL_API_KEY;
 
     if (!API_KEY) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ success: false, error: 'FOOTBALL_API_KEY not set' })
+        body: JSON.stringify({ success: false, error: "FOOTBALL_API_KEY not set" })
       };
     }
 
-    // Date range: today → next 7 days
     const today = new Date();
     const from = today.toISOString().split('T')[0];
 
@@ -29,38 +27,48 @@ exports.handler = async (event) => {
     nextWeek.setDate(nextWeek.getDate() + 7);
     const to = nextWeek.toISOString().split('T')[0];
 
-    const url = `https://v3.football.api-sports.io/fixtures?league=39&season=2025&from=${from}&to=${to}`;
-
-    console.log("Calling API:", url);
-
-    const response = await fetch(url, {
+    const options = {
+      hostname: 'v3.football.api-sports.io',
+      path: `/fixtures?league=39&season=2025&from=${from}&to=${to}`,
       method: 'GET',
       headers: {
         'x-apisports-key': API_KEY,
         'Accept': 'application/json'
       }
+    };
+
+    const data = await new Promise((resolve, reject) => {
+      const req = https.request(options, (res) => {
+
+        let body = '';
+
+        res.on('data', chunk => {
+          body += chunk;
+        });
+
+        res.on('end', () => {
+          try {
+            resolve(JSON.parse(body));
+          } catch (err) {
+            reject(new Error("Failed to parse API response: " + body));
+          }
+        });
+
+      });
+
+      req.on('error', err => reject(err));
+      req.end();
     });
-
-    if (!response.ok) {
-      const text = await response.text();
-      console.error("API ERROR:", text);
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ success: false, error: text })
-      };
-    }
-
-    const data = await response.json();
 
     if (!data.response) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ success: false, error: 'Invalid API response structure' })
+        body: JSON.stringify({ success: false, error: "Invalid API response" })
       };
     }
 
     const { db } = await connectToDatabase();
-    const fixturesCol = db.collection('fixtures');
+    const col = db.collection('fixtures');
 
     let inserted = 0;
     let updated = 0;
@@ -86,7 +94,7 @@ exports.handler = async (event) => {
         updatedAt: new Date()
       };
 
-      const result = await fixturesCol.updateOne(
+      const result = await col.updateOne(
         { apiId: f.id },
         { $set: doc },
         { upsert: true }
@@ -98,7 +106,6 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         success: true,
         inserted,
@@ -108,10 +115,12 @@ exports.handler = async (event) => {
     };
 
   } catch (error) {
-    console.error("fetchFixtures ERROR:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ success: false, error: error.message })
+      body: JSON.stringify({
+        success: false,
+        error: error.message
+      })
     };
   }
 };
