@@ -4,13 +4,6 @@
 // ============================================================
 
 const { connectToDatabase } = require('./utils/mongodb');
-const https = require('https');
-
-// Force TLS 1.2 (prevents SSL alert internal error)
-const agent = new https.Agent({
-  keepAlive: true,
-  secureProtocol: 'TLSv1_2_method'
-});
 
 exports.handler = async (event) => {
 
@@ -45,8 +38,7 @@ exports.handler = async (event) => {
       headers: {
         'x-apisports-key': API_KEY,
         'Accept': 'application/json'
-      },
-      agent
+      }
     });
 
     if (!response.ok) {
