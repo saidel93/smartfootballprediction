@@ -1,21 +1,39 @@
-// netlify/functions/getPrediction.js
-// URL: /.netlify/functions/getPrediction?slug=man-city-vs-liverpool-2026-02-22
-const { connectToDatabase } = require('./utils/mongodb');
+const fetch = require("node-fetch");
+const { MongoClient } = require("mongodb");
 
-const H = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
+exports.handler = async function (event) {
 
-exports.handler = async (event) => {
-  if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers: H, body: '' };
-  const slug = event.queryStringParameters?.slug;
-  if (!slug) return { statusCode: 400, headers: H, body: JSON.stringify({ error: 'slug is required' }) };
-  try {
-    const { db } = await connectToDatabase();
-    const prediction = await db.collection('predictions').findOne({ slug });
-    if (!prediction) return { statusCode: 404, headers: H, body: JSON.stringify({ error: 'Prediction not found' }) };
-    const fixture = await db.collection('fixtures').findOne({ apiId: prediction.fixtureId });
-    return { statusCode: 200, headers: H, body: JSON.stringify({ success: true, prediction: { ...prediction, _id: prediction._id?.toString() }, fixture: fixture ? { ...fixture, _id: fixture._id?.toString() } : null }) };
-  } catch (e) {
-    console.error('getPrediction:', e);
-    return { statusCode: 500, headers: H, body: JSON.stringify({ error: e.message }) };
-  }
+  const fixture = event.queryStringParameters.fixture;
+  const apiKey = process.env.FOOTBALL_API_KEY;
+  const mongoUri = process.env.MONGODB_URI;
+
+  const response = await fetch(
+    `https://v3.football.api-sports.io/predictions?fixture=${fixture}`,
+    {
+      headers: {
+        "x-apisports-key": apiKey,
+      },
+    }
+  );
+
+  const data = await response.json();
+  const prediction = data.response[0].predictions;
+
+  const result = {
+    winner: prediction.winner.name,
+    goals: prediction.goals.home + "-" + prediction.goals.away,
+    corners: "AI generated",
+    cards: "AI generated"
+  };
+
+  const client = new MongoClient(mongoUri);
+  await client.connect();
+  const db = client.db("smartfootball");
+  await db.collection("predictions").insertOne(result);
+  await client.close();
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(result),
+  };
 };
