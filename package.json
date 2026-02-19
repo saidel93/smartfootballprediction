@@ -1,0 +1,23 @@
+{
+  "name": "smart-football-predictions",
+  "version": "1.0.0",
+  "description": "SmartFootballPredictions.com — AI-powered football predictions for 15+ leagues",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "mongodb": "^6.3.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step — static HTML site'",
+    "test:fixtures": "curl -s http://localhost:8888/.netlify/functions/fetchFixtures | python3 -m json.tool",
+    "test:matches": "curl -s http://localhost:8888/.netlify/functions/getMatches | python3 -m json.tool",
+    "test:blogs": "curl -s http://localhost:8888/.netlify/functions/getBlogs | python3 -m json.tool",
+    "test:accuracy": "curl -s http://localhost:8888/.netlify/functions/getAccuracy | python3 -m json.tool"
+  }
+}

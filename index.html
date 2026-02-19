@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title id="doc-title">SmartFootballPredictions.com – AI Football Predictions</title>
+<meta id="doc-desc" name="description" content="AI-powered football predictions for Premier League, La Liga, Bundesliga, Serie A, Brasileirão, Primeira Liga and 10+ more leagues. GPT-4 analysis. 147+ predictions weekly."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#030B18;--bg2:#071020;--bg3:#0B1729;--bg4:#101F35;--bg5:#172640;
+  --border:rgba(255,255,255,0.055);--border2:rgba(255,255,255,0.1);--border3:rgba(255,255,255,0.16);
+  --green:#07E87A;--green2:rgba(7,232,122,0.1);--green3:rgba(7,232,122,0.05);--greenfade:rgba(7,232,122,0.5);
+  --amber:#FFBF00;--amber2:rgba(255,191,0,0.1);
+  --blue:#3D8EFF;--blue2:rgba(61,142,255,0.1);
+  --red:#FF3A55;--red2:rgba(255,58,85,0.1);
+  --purple:#A78BFA;--purple2:rgba(167,139,250,0.1);
+  --text:#D8E8F5;--text2:#7B93AD;--text3:#3D5268;
+  --font-d:'Rajdhani',sans-serif;--font-b:'Nunito',sans-serif;--font-m:'JetBrains Mono',monospace;
+  --nav:60px;--sb:215px;--r:10px;--r2:14px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 100% 50% at 50% 0%,rgba(7,232,122,0.035),transparent 55%);pointer-events:none;z-index:0}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px}::-webkit-scrollbar-thumb:hover{background:var(--green)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:400;height:var(--nav);display:flex;align-items:center;padding:0 1.25rem;gap:0.75rem;background:rgba(3,11,24,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--font-d);font-size:1.3rem;font-weight:700;letter-spacing:0.06em;color:#fff;cursor:pointer;display:flex;align-items:center;gap:0;flex-shrink:0}
+.logo .sfp{color:var(--green)}
+.logo .com{font-size:0.58rem;font-family:var(--font-m);color:var(--text3);font-weight:400;border:1px solid var(--border2);padding:0.07rem 0.28rem;border-radius:3px;margin-left:3px;align-self:flex-start;margin-top:2px}
+.nav-links{display:flex;gap:1px;flex:1}
+.nl{padding:0.36rem 0.8rem;border-radius:7px;font-size:0.79rem;font-weight:600;color:var(--text2);background:none;border:none;cursor:pointer;transition:all 0.18s;font-family:var(--font-b)}
+.nl:hover{color:#fff;background:var(--bg4)}
+.nl.on{color:var(--green);background:var(--green2)}
+.nav-r{display:flex;align-items:center;gap:0.6rem;margin-left:auto;flex-shrink:0}
+.search-wrap{display:flex;align-items:center;gap:0.4rem;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:0.36rem 0.75rem;font-size:0.74rem;color:var(--text3);min-width:170px}
+.live-badge{display:flex;align-items:center;gap:0.32rem;padding:0.26rem 0.6rem;background:var(--red2);border:1px solid rgba(255,58,85,0.22);border-radius:100px;font-size:0.66rem;font-weight:700;color:var(--red);font-family:var(--font-m);white-space:nowrap}
+.ldot{width:5px;height:5px;border-radius:50%;background:var(--red);animation:blink 1.1s ease-in-out infinite}
+
+/* SHELL */
+.shell{display:grid;grid-template-columns:var(--sb) 1fr;min-height:100vh;padding-top:var(--nav)}
+
+/* SIDEBAR */
+.sb{position:sticky;top:var(--nav);height:calc(100vh - var(--nav));overflow-y:auto;background:var(--bg2);border-right:1px solid var(--border);padding:0.6rem 0;scrollbar-width:thin;scrollbar-color:var(--bg5) transparent}
+.sb-label{padding:0.5rem 0.9rem 0.18rem;font-size:0.56rem;font-weight:700;color:var(--text3);letter-spacing:0.2em;text-transform:uppercase;font-family:var(--font-m)}
+.sbi{display:flex;align-items:center;gap:0.48rem;padding:0.44rem 0.9rem;cursor:pointer;transition:all 0.14s;border-left:2px solid transparent;font-size:0.77rem;color:var(--text2)}
+.sbi:hover{color:var(--text);background:var(--bg3);border-left-color:var(--border3)}
+.sbi.on{color:var(--green);background:var(--green3);border-left-color:var(--green);font-weight:600}
+.sbi .ico{font-size:0.88rem;width:16px;text-align:center;flex-shrink:0}
+.sbi .ct{margin-left:auto;font-size:0.6rem;font-family:var(--font-m);background:var(--bg4);padding:0.06rem 0.32rem;border-radius:3px;color:var(--text3)}
+.sbi.on .ct{background:var(--green2);color:var(--greenfade)}
+.sdiv{height:1px;background:var(--border);margin:0.4rem 0}
+
+/* MAIN */
+main{background:var(--bg);position:relative;z-index:1}
+
+/* PAGES */
+.page{display:none;padding:1.5rem;animation:fadeUp 0.28s ease both}
+.page.on{display:block}
+
+/* TICKER */
+.ticker{overflow:hidden;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:0.4rem 0;margin-bottom:1.1rem;white-space:nowrap;position:relative}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:36px;z-index:2;pointer-events:none}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--bg2),transparent)}
+.ticker::after{right:0;background:linear-gradient(-90deg,var(--bg2),transparent)}
+.ticker-inner{display:inline-flex;gap:2.5rem;animation:ticker 40s linear infinite}
+.ti{display:flex;align-items:center;gap:0.42rem;font-size:0.72rem}
+.ti-teams{font-weight:600;color:var(--text)}
+.ti-live{color:var(--red);font-weight:700;font-family:var(--font-m);font-size:0.64rem}
+.ti-score{color:#fff;font-family:var(--font-m);font-weight:700}
+.ti-time{color:var(--green);font-family:var(--font-m);font-size:0.66rem}
+.ti-sep{color:var(--text3)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--bg2),var(--bg3) 60%,var(--bg2));border:1px solid var(--border);border-radius:var(--r2);padding:2rem 2.25rem;margin-bottom:1.1rem;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center}
+.hero::before{content:'';position:absolute;top:-40%;right:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(7,232,122,0.06),transparent 60%);pointer-events:none}
+.hero-h{font-family:var(--font-d);font-size:clamp(2.4rem,4vw,3.8rem);font-weight:700;letter-spacing:0.05em;line-height:0.93;color:#fff}
+.hero-h em{color:var(--green);font-style:normal}
+.hero-sub{color:var(--text2);font-size:0.86rem;line-height:1.65;margin:0.75rem 0 1.1rem;max-width:420px}
+.hero-btns{display:flex;gap:0.45rem;flex-wrap:wrap}
+.btn-p{padding:0.6rem 1.3rem;background:var(--green);color:var(--bg);font-weight:700;font-size:0.8rem;border:none;border-radius:8px;cursor:pointer;transition:all 0.2s;font-family:var(--font-b)}
+.btn-p:hover{background:#1fffa0;transform:translateY(-1px);box-shadow:0 6px 20px rgba(7,232,122,0.25)}
+.btn-g{padding:0.6rem 1.3rem;background:var(--bg4);color:var(--text);font-size:0.8rem;border:1px solid var(--border2);border-radius:8px;cursor:pointer;transition:all 0.2s;font-family:var(--font-b)}
+.btn-g:hover{background:var(--bg5)}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;flex-shrink:0}
+.hs{background:var(--bg4);border:1px solid var(--border);border-radius:10px;padding:0.85rem 0.95rem;text-align:center;position:relative;overflow:hidden;min-width:95px}
+.hs::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent)}
+.hs-v{font-family:var(--font-d);font-size:1.9rem;font-weight:700;color:#fff;line-height:1}
+.hs-v.g{color:var(--green)}.hs-v.a{color:var(--amber)}
+.hs-l{font-size:0.64rem;color:var(--text2);margin-top:0.18rem}
+
+/* SECTION HEADER */
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem}
+.sec-title{font-family:var(--font-d);font-size:1.2rem;font-weight:700;letter-spacing:0.06em;color:#fff}
+.sec-title em{color:var(--green);font-style:normal}
+.sec-action{font-size:0.74rem;color:var(--green);cursor:pointer;background:none;border:none;font-family:var(--font-b)}
+.sec-action:hover{opacity:0.7}
+
+/* DATE TABS */
+.date-row{display:flex;gap:0.32rem;margin-bottom:0.85rem;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.date-row::-webkit-scrollbar{display:none}
+.dt{flex-shrink:0;padding:0.45rem 0.8rem;border-radius:8px;background:var(--bg2);border:1px solid var(--border);cursor:pointer;text-align:center;transition:all 0.18s;min-width:58px}
+.dt:hover{border-color:var(--border2)}
+.dt.on{background:var(--green2);border-color:rgba(7,232,122,0.22)}
+.dt-d{font-size:0.56rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em}
+.dt-n{font-family:var(--font-d);font-size:1.25rem;font-weight:700;color:#fff;line-height:1.1}
+.dt-c{font-size:0.58rem;color:var(--text3);font-family:var(--font-m);margin-top:1px}
+.dt.on .dt-d,.dt.on .dt-n,.dt.on .dt-c{color:var(--green)}
+
+/* FILTER BAR */
+.fbar{display:flex;align-items:center;gap:0.32rem;margin-bottom:0.85rem;flex-wrap:wrap}
+.fb{padding:0.33rem 0.74rem;border-radius:6px;font-size:0.72rem;font-weight:600;color:var(--text2);background:var(--bg2);border:1px solid var(--border);cursor:pointer;transition:all 0.15s;font-family:var(--font-b)}
+.fb:hover{color:var(--text);border-color:var(--border2)}
+.fb.on{color:var(--green);background:var(--green2);border-color:rgba(7,232,122,0.2)}
+.fb-sep{width:1px;height:15px;background:var(--border);margin:0 0.1rem;flex-shrink:0}
+.fb-right{margin-left:auto}
+
+/* LEAGUE GROUP */
+.lg{margin-bottom:1rem;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.lg-hd{display:flex;align-items:center;gap:0.6rem;padding:0.56rem 0.88rem;background:var(--bg2);cursor:pointer;transition:background 0.14s;user-select:none}
+.lg-hd:hover{background:var(--bg3)}
+.lg-flag{font-size:1rem}
+.lg-name{font-family:var(--font-d);font-size:0.93rem;font-weight:600;letter-spacing:0.04em;color:#fff}
+.lg-sub{font-size:0.62rem;color:var(--text3)}
+.lg-r{margin-left:auto;display:flex;align-items:center;gap:0.65rem}
+.lg-cnt{font-size:0.65rem;font-family:var(--font-m);color:var(--text3)}
+.chev{color:var(--text3);font-size:0.7rem;transition:transform 0.22s}
+.lg.closed .chev{transform:rotate(-90deg)}
+.lg.closed .lg-body{display:none}
+.lg-body{background:var(--bg)}
+
+/* TABLE HEADER */
+.tbl-hd{display:grid;grid-template-columns:76px 1fr 60px 1fr 104px 84px 94px;gap:0.38rem;padding:0.38rem 0.88rem;background:var(--bg3);border-top:1px solid var(--border)}
+.th{font-size:0.56rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;font-family:var(--font-m)}
+.th.c{text-align:center}
+
+/* MATCH ROW */
+.mr{display:grid;grid-template-columns:76px 1fr 60px 1fr 104px 84px 94px;gap:0.38rem;align-items:center;padding:0.5rem 0.88rem;border-top:1px solid var(--border);transition:background 0.12s;cursor:pointer}
+.mr:hover{background:var(--bg2)}
+.mr:hover .mr-cta{color:var(--green)}
+.t-col{font-family:var(--font-m);font-size:0.74rem;font-weight:500;color:#fff;text-align:center}
+.t-dsm{font-size:0.58rem;color:var(--text3);text-align:center;margin-top:1px}
+.s-live{font-size:0.6rem;font-weight:700;color:var(--red);font-family:var(--font-m);background:var(--red2);padding:0.09rem 0.32rem;border-radius:3px;text-align:center;animation:blink 1.4s infinite}
+.tc{display:flex;align-items:center;gap:0.42rem}
+.tc.r{flex-direction:row-reverse;text-align:right}
+.badge-t{width:22px;height:22px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:0.74rem;flex-shrink:0;border:1px solid var(--border2)}
+.tn{font-size:0.76rem;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:108px}
+.tn.b{font-weight:700;color:#fff}
+.score-c{text-align:center}
+.score{font-family:var(--font-d);font-size:0.98rem;font-weight:700;color:#fff;letter-spacing:0.05em}
+.vs{font-family:var(--font-d);font-size:0.82rem;color:var(--text3);letter-spacing:0.08em}
+.prob-c{display:flex;flex-direction:column;align-items:center;gap:2px}
+.pb{display:flex;gap:1px;height:5px;border-radius:100px;overflow:hidden;width:90px}
+.ps{height:100%;border-radius:100px}
+.ph{background:var(--green)}.pd{background:var(--amber)}.pa{background:var(--blue)}
+.pnums{display:flex;font-size:0.55rem;font-family:var(--font-m);color:var(--text3);width:90px;justify-content:space-between}
+.conf-c{text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
+.conf-v{font-size:0.68rem;font-family:var(--font-m);font-weight:700}
+.ch{color:var(--green)}.cm{color:var(--amber)}.cl{color:var(--red)}
+.ou-tag{font-size:0.57rem;font-family:var(--font-m);color:var(--amber);background:var(--amber2);padding:0.06rem 0.26rem;border-radius:3px;border:1px solid rgba(255,191,0,0.15)}
+.mr-cta{font-size:0.68rem;font-weight:700;color:var(--text2);transition:color 0.14s;font-family:var(--font-m);text-align:right;white-space:nowrap}
+
+/* MATCH DETAIL */
+.breadcrumb{display:flex;align-items:center;gap:0.38rem;font-size:0.68rem;color:var(--text3);margin-bottom:1rem;flex-wrap:wrap}
+.bc-link{color:var(--text2);cursor:pointer;transition:color 0.14s}
+.bc-link:hover{color:var(--green)}
+.bc-sep{color:var(--text3)}
+.match-h1{font-family:var(--font-d);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;letter-spacing:0.04em;color:#fff;margin-bottom:0.25rem;line-height:1.1}
+.match-meta-desc{font-size:0.78rem;color:var(--text2);margin-bottom:1rem;line-height:1.5;max-width:680px}
+.match-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:1.6rem;margin-bottom:1rem;position:relative;overflow:hidden}
+.match-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--green) 30%,var(--amber) 70%,transparent)}
+.mc-league{display:flex;align-items:center;gap:0.45rem;font-size:0.68rem;color:var(--text2);margin-bottom:1rem}
+.teams-row{display:flex;align-items:center;justify-content:space-between;gap:1.2rem}
+.team-blk{flex:1;text-align:center}
+.team-crest{width:58px;height:58px;background:var(--bg4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 0.55rem;border:2px solid var(--border2);transition:all 0.25s}
+.team-crest:hover{border-color:var(--green);transform:scale(1.06)}
+.team-name-big{font-family:var(--font-d);font-size:1.3rem;font-weight:700;letter-spacing:0.04em;color:#fff}
+.team-role{font-size:0.63rem;color:var(--text3);margin-top:0.12rem}
+.team-form{display:flex;gap:3px;justify-content:center;margin-top:0.42rem}
+.fb-sq{width:18px;height:18px;border-radius:3px;font-size:0.58rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.fw{background:rgba(7,232,122,0.17);color:var(--green);border:1px solid rgba(7,232,122,0.25)}
+.fd{background:rgba(255,191,0,0.17);color:var(--amber);border:1px solid rgba(255,191,0,0.25)}
+.fl{background:rgba(255,58,85,0.17);color:var(--red);border:1px solid rgba(255,58,85,0.25)}
+.vs-blk{text-align:center;flex-shrink:0}
+.vs-big{font-family:var(--font-d);font-size:3rem;font-weight:700;color:rgba(255,255,255,0.04);display:block;line-height:1;letter-spacing:0.1em}
+.pred-tag{display:inline-flex;align-items:center;gap:0.28rem;padding:0.25rem 0.72rem;background:var(--green2);border:1px solid rgba(7,232,122,0.2);border-radius:100px;font-size:0.68rem;color:var(--green);font-weight:700;margin-top:0.42rem}
+
+.match-layout{display:grid;grid-template-columns:1fr 285px;gap:1rem;align-items:start}
+.match-main{display:flex;flex-direction:column;gap:0.9rem}
+.match-side{display:flex;flex-direction:column;gap:0.8rem}
+
+.scard{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:0.95rem 1.05rem}
+.scard-title{font-size:0.58rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.15em;font-family:var(--font-m);margin-bottom:0.7rem;display:flex;align-items:center;gap:0.35rem}
+.scard-title .dot{width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0}
+
+.prob-track{display:flex;height:10px;border-radius:100px;overflow:hidden;gap:2px;margin:0.4rem 0}
+.prob-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:0.58rem;font-weight:700;color:var(--bg);font-family:var(--font-m)}
+.prob-vals{display:flex;justify-content:space-between;margin-top:0.5rem}
+.pv{text-align:center}
+.pv .n{font-family:var(--font-d);font-size:1.7rem;font-weight:700;line-height:1}
+.pv .l{font-size:0.6rem;color:var(--text3);margin-top:0.08rem}
+
+.goals-row{display:flex;align-items:center;justify-content:space-around;padding:0.2rem 0}
+.gnum{font-family:var(--font-d);font-size:2.8rem;font-weight:700;color:#fff;line-height:1}
+.gsep{color:var(--text3);font-size:1.3rem}
+.ou-big{text-align:center;margin-top:0.6rem;padding:0.38rem;background:var(--green2);border:1px solid rgba(7,232,122,0.15);border-radius:7px;font-size:0.76rem;font-weight:700;color:var(--green)}
+
+.ring-wrap{display:flex;flex-direction:column;align-items:center;gap:0.35rem;padding:0.3rem 0}
+.ring-svg{width:82px;height:82px;transform:rotate(-90deg)}
+.ring-trk{fill:none;stroke:var(--bg4);stroke-width:8}
+.ring-fill{fill:none;stroke:var(--green);stroke-width:8;stroke-linecap:round;stroke-dasharray:201;transition:stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)}
+.ring-num{font-family:var(--font-d);font-size:1.45rem;font-weight:700;color:var(--green);text-align:center}
+.ring-lbl{font-size:0.62rem;color:var(--text3);text-align:center}
+
+.mini2{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem}
+.msb{text-align:center;padding:0.6rem;background:var(--bg3);border:1px solid var(--border);border-radius:8px}
+.msb-v{font-family:var(--font-d);font-size:1.35rem;font-weight:700;color:#fff;line-height:1}
+.msb-l{font-size:0.6rem;color:var(--text3);margin-top:0.18rem}
+
+.ai-blk{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.ai-hd{display:flex;align-items:center;gap:0.5rem;padding:0.75rem 1.05rem;border-bottom:1px solid var(--border);background:var(--bg3)}
+.ai-badge{padding:0.13rem 0.42rem;background:var(--green2);border:1px solid rgba(7,232,122,0.2);border-radius:4px;font-size:0.57rem;font-family:var(--font-m);color:var(--green);font-weight:700;letter-spacing:0.1em}
+.ai-model{font-size:0.63rem;color:var(--text3);font-family:var(--font-m)}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s ease-in-out infinite;flex-shrink:0}
+.ai-body{padding:1.05rem}
+.kfs{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:0.8rem}
+.kf{display:flex;gap:0.48rem;padding:0.46rem 0.62rem;background:var(--bg3);border:1px solid var(--border);border-radius:7px;font-size:0.76rem;color:var(--text2);line-height:1.45;align-items:flex-start}
+.kf-arr{color:var(--green);flex-shrink:0;font-size:0.68rem;margin-top:2px}
+.ai-text{font-size:0.78rem;color:var(--text2);line-height:1.8}
+.ai-text p{margin-bottom:0.55rem}
+.ai-text p:last-child{margin-bottom:0}
+.ai-disc{font-size:0.65rem;color:var(--text3);font-style:italic;margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid var(--border);line-height:1.5}
+
+.seo-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:0.95rem 1.05rem}
+.seo-url{color:var(--green);font-family:var(--font-m);font-size:0.63rem;margin-bottom:0.26rem;word-break:break-all}
+.seo-t{font-weight:700;color:#7AB8FF;font-size:0.78rem;margin-bottom:0.26rem}
+.seo-d{color:var(--text2);line-height:1.5;font-size:0.71rem}
+.schema-tags{display:flex;flex-wrap:wrap;gap:0.28rem;margin-top:0.45rem}
+.stag{padding:0.12rem 0.38rem;background:var(--purple2);border:1px solid rgba(167,139,250,0.2);border-radius:4px;font-size:0.58rem;font-family:var(--font-m);color:var(--purple)}
+
+.qs-row{display:flex;justify-content:space-between;align-items:center;padding:0.45rem 0;border-bottom:1px solid var(--border)}
+.qs-row:last-child{border-bottom:none}
+.qs-lbl{font-size:0.74rem;color:var(--text2)}
+.qs-val{font-size:0.74rem;font-weight:700;color:#fff;font-family:var(--font-m)}
+.qs-val.g{color:var(--green)}.qs-val.a{color:var(--amber)}
+
+.aff-card{background:var(--bg2);border:1px solid rgba(255,191,0,0.1);border-radius:12px;padding:0.95rem 1.05rem}
+.aff-title{font-size:0.76rem;font-weight:700;color:var(--text);margin-bottom:0.18rem}
+.aff-sub{font-size:0.64rem;color:var(--text3);margin-bottom:0.6rem}
+.aff-btn{display:flex;align-items:center;justify-content:space-between;padding:0.52rem 0.76rem;background:var(--bg3);border:1px solid var(--border);border-radius:8px;margin-bottom:0.35rem;cursor:pointer;transition:all 0.18s;text-decoration:none}
+.aff-btn:hover{background:var(--bg4);border-color:rgba(255,191,0,0.22)}
+.aff-name{font-size:0.76rem;color:var(--text);display:flex;align-items:center;gap:0.35rem}
+.aff-act{font-size:0.66rem;color:var(--amber);font-family:var(--font-m)}
+
+.rel-list{display:flex;flex-direction:column;gap:0.4rem}
+.rel-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.56rem 0.76rem;cursor:pointer;transition:all 0.18s;display:flex;align-items:center;justify-content:space-between}
+.rel-card:hover{border-color:rgba(7,232,122,0.18);background:var(--bg4)}
+.rel-match{font-size:0.74rem;font-weight:600;color:var(--text)}
+.rel-sub{font-size:0.61rem;color:var(--text3)}
+.rel-conf{font-size:0.64rem;font-family:var(--font-m);color:var(--green)}
+
+/* BLOG */
+.blog-top{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:1.1rem 1.6rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.8rem}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem}
+.bc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;cursor:pointer;transition:all 0.22s;display:flex;flex-direction:column}
+.bc:hover{border-color:rgba(7,232,122,0.18);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.35)}
+.bc-img{height:125px;display:flex;align-items:center;justify-content:center;font-size:2.6rem;position:relative}
+.bc-img.pl{background:linear-gradient(135deg,#1a2980,#26d0ce)}
+.bc-img.ll{background:linear-gradient(135deg,#7b0c00,#f39c12)}
+.bc-img.bl{background:linear-gradient(135deg,#1F2C3A,#2980B9)}
+.bc-img.cl{background:linear-gradient(135deg,#0A0A20,#1a1a50)}
+.bc-img.br{background:linear-gradient(135deg,#005C2C,#F5C400)}
+.bc-img.pt{background:linear-gradient(135deg,#003900,#CC0000)}
+.bc-img.sa{background:linear-gradient(135deg,#006341,#003580)}
+.bc-body{padding:0.85rem;flex:1;display:flex;flex-direction:column}
+.bc-cat{display:inline-block;padding:0.14rem 0.48rem;border-radius:4px;font-size:0.6rem;font-family:var(--font-m);font-weight:700;letter-spacing:0.07em;margin-bottom:0.5rem}
+.cat-wp{background:var(--green2);color:var(--green);border:1px solid rgba(7,232,122,0.18)}
+.cat-pr{background:var(--blue2);color:var(--blue);border:1px solid rgba(61,142,255,0.18)}
+.cat-an{background:var(--amber2);color:var(--amber);border:1px solid rgba(255,191,0,0.18)}
+.cat-re{background:var(--purple2);color:var(--purple);border:1px solid rgba(167,139,250,0.18)}
+.bc-title{font-size:0.84rem;font-weight:700;color:#fff;line-height:1.4;margin-bottom:0.42rem;flex:1;transition:color 0.18s}
+.bc:hover .bc-title{color:var(--green)}
+.bc-excerpt{font-size:0.72rem;color:var(--text2);line-height:1.5;margin-bottom:0.6rem}
+.bc-foot{display:flex;justify-content:space-between;align-items:center;padding-top:0.5rem;border-top:1px solid var(--border)}
+.bc-date{font-size:0.62rem;color:var(--text3)}
+.bc-read{font-size:0.66rem;color:var(--green)}
+
+/* BLOG SINGLE */
+.blog-single{max-width:790px}
+.bs-cat{display:inline-block;padding:0.16rem 0.5rem;border-radius:5px;font-size:0.62rem;font-family:var(--font-m);font-weight:700;margin-bottom:0.65rem}
+.bs-h1{font-family:var(--font-d);font-size:clamp(1.65rem,4vw,2.5rem);font-weight:700;letter-spacing:0.04em;color:#fff;line-height:1.05;margin-bottom:0.6rem}
+.bs-meta{display:flex;align-items:center;gap:0.7rem;font-size:0.7rem;color:var(--text3);flex-wrap:wrap;margin-bottom:1.1rem}
+.bs-body{font-size:0.86rem;line-height:1.85;color:var(--text2)}
+.bs-body h2{font-family:var(--font-d);font-size:1.4rem;font-weight:700;color:#fff;margin:1.5rem 0 0.5rem;letter-spacing:0.04em}
+.bs-body h3{font-family:var(--font-d);font-size:1.1rem;font-weight:600;color:var(--text);margin:1.1rem 0 0.42rem}
+.bs-body p{margin-bottom:0.85rem}
+.bs-body ul{margin:0.38rem 0 0.85rem 1rem;display:flex;flex-direction:column;gap:0.32rem}
+.bs-body li{font-size:0.83rem;color:var(--text2)}
+.bs-body li::marker{color:var(--green)}
+.hl-box{background:var(--green2);border:1px solid rgba(7,232,122,0.15);border-radius:8px;padding:0.85rem 1rem;margin:0.8rem 0;font-size:0.81rem;color:var(--text)}
+.hl-box strong{color:var(--green)}
+.mref{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:0.75rem 0.85rem;margin:0.6rem 0;cursor:pointer;transition:all 0.18s;display:flex;align-items:center;justify-content:space-between}
+.mref:hover{border-color:rgba(7,232,122,0.18);background:var(--bg3)}
+.mref-teams{font-weight:700;color:#fff;font-size:0.8rem}
+.mref-meta{font-size:0.65rem;color:var(--text3)}
+.mref-cta{font-size:0.68rem;color:var(--green);font-family:var(--font-m)}
+.disc-box{margin-top:1.3rem;padding:0.85rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;font-size:0.68rem;color:var(--text3);line-height:1.55}
+
+/* ACCURACY */
+.acc-hero{display:grid;grid-template-columns:repeat(4,1fr);gap:0.7rem;margin-bottom:1.1rem}
+.acc-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center;position:relative;overflow:hidden}
+.acc-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent)}
+.acc-big{font-family:var(--font-d);font-size:2.6rem;font-weight:700;line-height:1;color:#fff}
+.acc-big.g{color:var(--green)}.acc-big.a{color:var(--amber)}
+.acc-lbl{font-size:0.66rem;color:var(--text2);margin-top:0.28rem}
+.league-tbl{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.lt-hd{display:grid;grid-template-columns:1.4fr 55px 55px 130px 66px;gap:0.5rem;padding:0.5rem 0.88rem;background:var(--bg3);border-bottom:1px solid var(--border)}
+.lt-row{display:grid;grid-template-columns:1.4fr 55px 55px 130px 66px;gap:0.5rem;padding:0.58rem 0.88rem;border-bottom:1px solid var(--border);align-items:center;transition:background 0.14s}
+.lt-row:last-child{border-bottom:none}
+.lt-row:hover{background:var(--bg3)}
+.lt-lg{display:flex;align-items:center;gap:0.52rem;font-size:0.76rem}
+.lt-n{font-family:var(--font-m);font-size:0.72rem;color:var(--text2);text-align:center}
+.lt-acc{font-family:var(--font-m);font-size:0.76rem;font-weight:700;color:var(--green);text-align:center}
+.lt-bar-wrap{display:flex;align-items:center}
+.lt-bar{height:5px;border-radius:100px;background:var(--bg4);overflow:hidden;flex:1}
+.lt-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--greenfade));border-radius:100px}
+
+/* LOADING / UTIL */
+.loading-row{display:flex;align-items:center;justify-content:center;gap:0.45rem;padding:1.5rem;color:var(--text3);font-size:0.78rem}
+.spin{width:15px;height:15px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0}
+.empty-state{text-align:center;padding:2.5rem 1rem;color:var(--text3);font-size:0.82rem}
+.empty-state .icon{font-size:2.5rem;margin-bottom:0.5rem}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);background:var(--bg2);padding:2rem 1.5rem 1.25rem;margin-top:2rem}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:2.25rem;margin-bottom:1.4rem}
+.footer-logo{font-family:var(--font-d);font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:0.42rem}
+.footer-logo em{color:var(--green);font-style:normal}
+.footer-desc{font-size:0.72rem;color:var(--text3);line-height:1.6}
+.footer-h{font-size:0.58rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.5rem;font-family:var(--font-m)}
+.footer-link{display:block;font-size:0.74rem;color:var(--text3);padding:0.16rem 0;cursor:pointer;transition:color 0.14s}
+.footer-link:hover{color:var(--green)}
+.footer-bot{display:flex;justify-content:space-between;align-items:center;padding-top:0.9rem;border-top:1px solid var(--border);font-size:0.66rem;color:var(--text3);flex-wrap:wrap;gap:0.45rem}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .hero{grid-template-columns:1fr}
+  .hero-stats{display:none}
+  .match-layout{grid-template-columns:1fr}
+  .blog-grid{grid-template-columns:1fr 1fr}
+  .acc-hero{grid-template-columns:1fr 1fr}
+}
+@media(max-width:800px){
+  :root{--sb:0px}
+  .sb{display:none}
+  .shell{grid-template-columns:1fr}
+  .tbl-hd,.mr{grid-template-columns:68px 1fr 56px 1fr}
+  .tbl-hd .th:nth-child(5),.tbl-hd .th:nth-child(6),.tbl-hd .th:nth-child(7),
+  .mr .prob-c,.mr .conf-c,.mr .mr-cta{display:none}
+  .blog-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .acc-hero{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="go('home')">
+    SMART<span class="sfp">FOOTBALL</span>PREDICTIONS<span class="com">.COM</span>
+  </div>
+  <div class="nav-links">
+    <button class="nl on" id="nl-home" onclick="goNav('home',this)">Home</button>
+    <button class="nl" id="nl-matches" onclick="goNav('matches',this)">Predictions</button>
+    <button class="nl" id="nl-blog" onclick="goNav('blog',this)">Blog</button>
+    <button class="nl" id="nl-accuracy" onclick="goNav('accuracy',this)">Accuracy</button>
+  </div>
+  <div class="nav-r">
+    <div class="search-wrap">
+      <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
+      &nbsp;Search team or match...
+    </div>
+    <div class="live-badge"><div class="ldot"></div><span id="live-num">14</span>&nbsp;LIVE</div>
+  </div>
+</nav>
+
+<div class="shell">
+<!-- SIDEBAR -->
+<aside class="sb">
+  <div class="sb-label">Navigation</div>
+  <div class="sbi on" onclick="go('home')"><span class="ico">🏠</span>Home</div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">📅</span>Predictions<span class="ct" id="sb-total">147</span></div>
+  <div class="sbi" onclick="go('blog')"><span class="ico">✍️</span>Blog<span class="ct">24</span></div>
+  <div class="sbi" onclick="go('accuracy')"><span class="ico">🏆</span>Accuracy<span class="ct" id="sb-acc">72%</span></div>
+  <div class="sdiv"></div>
+  <div class="sb-label">Top Leagues</div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>Premier League<span class="ct">10</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇪🇸</span>La Liga<span class="ct">10</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇪🇺</span>Champions League<span class="ct">8</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇮🇹</span>Serie A<span class="ct">10</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇩🇪</span>Bundesliga<span class="ct">9</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇫🇷</span>Ligue 1<span class="ct">10</span></div>
+  <div class="sdiv"></div>
+  <div class="sb-label">More Leagues</div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇵🇹</span>Primeira Liga<span class="ct">9</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇧🇷</span>Brasileirão A<span class="ct">10</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇧🇷</span>Brasileirão B<span class="ct">10</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>Championship<span class="ct">12</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>League One<span class="ct">11</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇫🇷</span>Ligue 2<span class="ct">10</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇮🇹</span>Serie B<span class="ct">10</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇩🇪</span>2. Bundesliga<span class="ct">9</span></div>
+  <div class="sbi" onclick="go('matches')"><span class="ico">🇳🇱</span>Eredivisie<span class="ct">9</span></div>
+  <div class="sdiv"></div>
+  <div class="sb-label">International</div>
+  <div class="sbi"><span class="ico">🌍</span>WC Qualifiers<span class="ct">18</span></div>
+  <div class="sbi"><span class="ico">🌎</span>Copa Libertadores<span class="ct">8</span></div>
+</aside>
+
+<main>
+
+<!-- HOME PAGE -->
+<div id="pg-home" class="page on">
+  <div class="hero">
+    <div>
+      <div class="hero-h">147+ GAMES<br><em>THIS WEEK</em><br>PREDICTED</div>
+      <div class="hero-sub">AI-powered statistical football predictions for 15+ leagues. Every match gets its own unique SEO page with GPT-4 analysis, Poisson statistics, confidence scores and odds comparison.</div>
+      <div class="hero-btns">
+        <button class="btn-p" onclick="go('matches')">View All Predictions →</button>
+        <button class="btn-g" onclick="go('blog')">Read AI Blog</button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-v g" id="stat-total">147</div><div class="hs-l">Predictions/Week</div></div>
+      <div class="hs"><div class="hs-v">15</div><div class="hs-l">Leagues</div></div>
+      <div class="hs"><div class="hs-v a" id="stat-acc">72%</div><div class="hs-l">Accuracy</div></div>
+      <div class="hs"><div class="hs-v g">AI</div><div class="hs-l">GPT-4 Powered</div></div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <div class="ti"><span class="ti-teams">Real Madrid vs Barcelona</span><span class="ti-sep">·</span><span class="ti-live">● 67'</span><span class="ti-sep">·</span><span class="ti-score">2–1</span></div>
+      <div class="ti"><span class="ti-teams">Arsenal vs Chelsea</span><span class="ti-sep">·</span><span class="ti-live">● 34'</span><span class="ti-sep">·</span><span class="ti-score">0–0</span></div>
+      <div class="ti"><span class="ti-teams">Man City vs Liverpool</span><span class="ti-sep">·</span><span class="ti-time">20:45</span></div>
+      <div class="ti"><span class="ti-teams">Bayern vs Leverkusen</span><span class="ti-sep">·</span><span class="ti-time">20:30</span></div>
+      <div class="ti"><span class="ti-teams">PSG vs Monaco</span><span class="ti-sep">·</span><span class="ti-time">21:00</span></div>
+      <div class="ti"><span class="ti-teams">Benfica vs Porto</span><span class="ti-sep">·</span><span class="ti-live">● 55'</span><span class="ti-sep">·</span><span class="ti-score">1–1</span></div>
+      <div class="ti"><span class="ti-teams">Inter vs AC Milan</span><span class="ti-sep">·</span><span class="ti-time">18:00</span></div>
+      <div class="ti"><span class="ti-teams">Flamengo vs Palmeiras</span><span class="ti-sep">·</span><span class="ti-time">00:00 BRT</span></div>
+      <div class="ti"><span class="ti-teams">Real Madrid vs Barcelona</span><span class="ti-sep">·</span><span class="ti-live">● 67'</span><span class="ti-sep">·</span><span class="ti-score">2–1</span></div>
+      <div class="ti"><span class="ti-teams">Arsenal vs Chelsea</span><span class="ti-sep">·</span><span class="ti-live">● 34'</span><span class="ti-sep">·</span><span class="ti-score">0–0</span></div>
+      <div class="ti"><span class="ti-teams">Man City vs Liverpool</span><span class="ti-sep">·</span><span class="ti-time">20:45</span></div>
+      <div class="ti"><span class="ti-teams">Bayern vs Leverkusen</span><span class="ti-sep">·</span><span class="ti-time">20:30</span></div>
+      <div class="ti"><span class="ti-teams">PSG vs Monaco</span><span class="ti-sep">·</span><span class="ti-time">21:00</span></div>
+      <div class="ti"><span class="ti-teams">Benfica vs Porto</span><span class="ti-sep">·</span><span class="ti-live">● 55'</span><span class="ti-sep">·</span><span class="ti-score">1–1</span></div>
+      <div class="ti"><span class="ti-teams">Inter vs AC Milan</span><span class="ti-sep">·</span><span class="ti-time">18:00</span></div>
+      <div class="ti"><span class="ti-teams">Flamengo vs Palmeiras</span><span class="ti-sep">·</span><span class="ti-time">00:00 BRT</span></div>
+    </div>
+  </div>
+
+  <div class="sec-hd">
+    <div class="sec-title">TODAY'S <em>HIGHLIGHTS</em></div>
+    <button class="sec-action" onclick="go('matches')">See all →</button>
+  </div>
+  <div id="home-matches"><div class="loading-row"><div class="spin"></div>Loading predictions...</div></div>
+
+  <div class="sec-hd" style="margin-top:1.4rem">
+    <div class="sec-title">LATEST <em>BLOG</em></div>
+    <button class="sec-action" onclick="go('blog')">All articles →</button>
+  </div>
+  <div class="blog-grid" id="home-blogs"><div class="loading-row" style="grid-column:1/-1"><div class="spin"></div>Loading blog posts...</div></div>
+</div>
+
+<!-- MATCHES PAGE -->
+<div id="pg-matches" class="page">
+  <div class="sec-hd">
+    <div class="sec-title">ALL <em>PREDICTIONS</em></div>
+    <span style="font-size:0.74rem;color:var(--text2)"><span style="color:var(--green);font-family:var(--font-m)" id="total-count">147</span> matches this week</span>
+  </div>
+  <div class="date-row" id="date-tabs"></div>
+  <div class="fbar" id="filter-bar">
+    <button class="fb on" onclick="setFilter('all',this)">All</button>
+    <button class="fb" onclick="setFilter('Premier League',this)">🏴󠁧󠁢󠁥󠁮󠁧󠁿 PL</button>
+    <button class="fb" onclick="setFilter('La Liga',this)">🇪🇸 La Liga</button>
+    <button class="fb" onclick="setFilter('Bundesliga',this)">🇩🇪 BL</button>
+    <button class="fb" onclick="setFilter('Serie A',this)">🇮🇹 Serie A</button>
+    <button class="fb" onclick="setFilter('Ligue 1',this)">🇫🇷 L1</button>
+    <button class="fb" onclick="setFilter('Champions League',this)">🇪🇺 UCL</button>
+    <button class="fb" onclick="setFilter('Primeira Liga',this)">🇵🇹 Liga PT</button>
+    <button class="fb" onclick="setFilter('Brasileirão A',this)">🇧🇷 Brasil</button>
+    <button class="fb" onclick="setFilter('Championship',this)">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Champ</button>
+    <div class="fb-sep"></div>
+    <button class="fb fb-right" id="sort-btn" onclick="toggleSort()">Sort: Time ↕</button>
+  </div>
+  <div id="matches-container"><div class="loading-row"><div class="spin"></div>Loading predictions...</div></div>
+</div>
+
+<!-- MATCH DETAIL PAGE -->
+<div id="pg-match" class="page">
+  <div id="match-content"><div class="loading-row"><div class="spin"></div>Loading prediction...</div></div>
+</div>
+
+<!-- BLOG LIST PAGE -->
+<div id="pg-blog" class="page">
+  <div class="blog-top">
+    <div>
+      <div class="sec-title" style="margin-bottom:0.2rem">AI FOOTBALL <em>BLOG</em></div>
+      <div style="font-size:0.74rem;color:var(--text2)">GPT-4 writes fresh articles daily — previews, picks, analysis</div>
+    </div>
+    <div class="fbar" style="margin:0">
+      <button class="fb on" onclick="setBlogCat('all',this)">All</button>
+      <button class="fb" onclick="setBlogCat('weekend-picks',this)">Weekend Picks</button>
+      <button class="fb" onclick="setBlogCat('daily-preview',this)">Daily Preview</button>
+      <button class="fb" onclick="setBlogCat('results-review',this)">Results</button>
+    </div>
+  </div>
+  <div class="blog-grid" id="blog-container"><div class="loading-row" style="grid-column:1/-1"><div class="spin"></div>Loading blog posts...</div></div>
+</div>
+
+<!-- BLOG POST PAGE -->
+<div id="pg-blog-post" class="page">
+  <div id="blog-post-content" class="blog-single"><div class="loading-row"><div class="spin"></div>Loading article...</div></div>
+</div>
+
+<!-- ACCURACY PAGE -->
+<div id="pg-accuracy" class="page">
+  <div class="sec-hd">
+    <div class="sec-title">PREDICTION <em>ACCURACY</em></div>
+    <span style="font-size:0.74rem;color:var(--text2)">All-time · live from database</span>
+  </div>
+  <div class="acc-hero">
+    <div class="acc-card"><div class="acc-big g" id="acc-overall">—</div><div class="acc-lbl">Overall Accuracy</div></div>
+    <div class="acc-card"><div class="acc-big" id="acc-correct">—</div><div class="acc-lbl">Correct Predictions</div></div>
+    <div class="acc-card"><div class="acc-big" id="acc-total">—</div><div class="acc-lbl">Total Resolved</div></div>
+    <div class="acc-card"><div class="acc-big g" id="acc-best">—</div><div class="acc-lbl">Best League</div></div>
+  </div>
+  <div class="league-tbl">
+    <div class="lt-hd">
+      <div class="th">League</div>
+      <div class="th" style="text-align:center">Total</div>
+      <div class="th" style="text-align:center">Correct</div>
+      <div class="th">Accuracy Bar</div>
+      <div class="th" style="text-align:center">%</div>
+    </div>
+    <div id="acc-table"><div class="loading-row"><div class="spin"></div>Loading accuracy data...</div></div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Smart<em>Football</em>Predictions<span style="color:var(--text3)">.com</span></div>
+      <div class="footer-desc">AI-powered statistical predictions for 15+ football leagues. Every match gets its own unique SEO page with GPT-4 analysis. 147+ predictions per week. For entertainment purposes only.</div>
+    </div>
+    <div>
+      <div class="footer-h">Top Leagues</div>
+      <span class="footer-link">Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+      <span class="footer-link">La Liga 🇪🇸</span>
+      <span class="footer-link">Bundesliga 🇩🇪</span>
+      <span class="footer-link">Serie A 🇮🇹</span>
+      <span class="footer-link">Ligue 1 🇫🇷</span>
+      <span class="footer-link">Champions League 🇪🇺</span>
+    </div>
+    <div>
+      <div class="footer-h">More Leagues</div>
+      <span class="footer-link">Primeira Liga 🇵🇹</span>
+      <span class="footer-link">Brasileirão A &amp; B 🇧🇷</span>
+      <span class="footer-link">EFL Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+      <span class="footer-link">League One 🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+      <span class="footer-link">Serie B 🇮🇹</span>
+      <span class="footer-link">Eredivisie 🇳🇱</span>
+    </div>
+    <div>
+      <div class="footer-h">Technology</div>
+      <span class="footer-link">Poisson Distribution Model</span>
+      <span class="footer-link">OpenAI GPT-4 Analysis</span>
+      <span class="footer-link">Football API Data</span>
+      <span class="footer-link">Auto-updated Hourly</span>
+      <div class="footer-h" style="margin-top:0.9rem">Legal</div>
+      <div class="footer-desc">Not betting advice. 18+ only. Always gamble responsibly. BeGambleAware.org</div>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <span>© 2026 SmartFootballPredictions.com — Statistical estimates only. Not affiliated with any football organisation.</span>
+    <span style="font-family:var(--font-m);font-size:0.6rem">GPT-4 · Poisson Model · 15 Leagues · Netlify + MongoDB</span>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// SMART FOOTBALL PREDICTIONS — FRONTEND ENGINE
+// Calls Netlify Functions for live data. Falls back to rich sample
+// data automatically when functions are not yet connected.
+// ═══════════════════════════════════════════════════════════════════
+
+const API = {
+  matches:    '/.netlify/functions/getMatches',
+  prediction: '/.netlify/functions/getPrediction',
+  blogs:      '/.netlify/functions/getBlogs',
+  accuracy:   '/.netlify/functions/getAccuracy',
+};
+
+// ── STATE ────────────────────────────────────────────────────────────
+const S = { page:'home', matchSlug:null, blogSlug:null, filter:'all', sortAsc:true, blogCat:'all', allGroups:[], allBlogs:[] };
+
+// ── SAMPLE DATA ──────────────────────────────────────────────────────
+const GROUPS = [
+  { league:'Premier League', flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', country:'England', matches:[
+    { apiId:1001, slug:'man-city-vs-liverpool-2026-02-22', homeTeam:'Man City', awayTeam:'Liverpool', homeEmoji:'🔵', awayEmoji:'🔴', matchDate:'2026-02-22T20:45:00Z', status:'NS',
+      prediction:{ homeWinProbability:52, drawProbability:24, awayWinProbability:24, confidenceScore:75, over25Probability:63, homeXG:1.8, awayXG:1.2, predictedWinner:'home', expectedCorners:10.9, expectedYellowCards:3.8,
+        keyFacts:['Man City home record: 8W–2D–1L this season','Liverpool concede 1.4 goals per away game','55% of H2H meetings produce Over 2.5 goals','Man City average xG at home: 2.1'],
+        analysis:'<p>Our Poisson distribution model assigns Manchester City a <strong>52% probability</strong> of winning this Premier League fixture at the Etihad. The expected scoreline of 1.8–1.2 points toward an Over 2.5 result at 63% probability.</p><p>Liverpool\'s defensive organisation away from Anfield has shown vulnerability, conceding in 7 of their last 9 away fixtures. Man City\'s xG of 2.1 per home game presents a sustained statistical threat.</p><p>The most probable scoreline is <strong>2–1 to Man City</strong> at 14.2% probability. Corners also look compelling — we project 6.1 for City and 4.8 for Liverpool, suggesting Over 10.5 corners has value.</p>',
+        seoTitle:'Man City vs Liverpool Prediction – Premier League GW27 | SmartFootballPredictions',
+        metaDescription:'AI prediction for Man City vs Liverpool 22 Feb 2026. 52% Man City win, xG 1.8–1.2, Over 2.5 at 63%. GPT-4 analysis.' }},
+    { apiId:1002, slug:'arsenal-vs-chelsea-2026-02-23', homeTeam:'Arsenal', awayTeam:'Chelsea', homeEmoji:'🔴', awayEmoji:'🔵', matchDate:'2026-02-23T14:00:00Z', status:'NS',
+      prediction:{ homeWinProbability:48, drawProbability:26, awayWinProbability:26, confidenceScore:68, over25Probability:47, homeXG:1.6, awayXG:1.1, predictedWinner:'home', expectedCorners:9.8, expectedYellowCards:4.1,
+        keyFacts:['Arsenal unbeaten at Emirates — last 12 PL matches','Chelsea won only 2 of last 8 away fixtures','38% of recent meetings produced Over 2.5 goals','Arsenal defensive record: 0.85 goals conceded per home game'],
+        analysis:'<p>Arsenal\'s Emirates fortress continues to be one of the most difficult venues in the Premier League. The model assigns them a <strong>48% win probability</strong> — Chelsea\'s improved away defensive record since January slightly reduces the usual home advantage.</p><p>Expected goals of <strong>1.6–1.1</strong> suggests a tight, tactical encounter. Under 2.5 goals is marginally favoured at 51%.</p>',
+        seoTitle:'Arsenal vs Chelsea Prediction – Premier League GW27 | SmartFootballPredictions',
+        metaDescription:'AI prediction for Arsenal vs Chelsea 23 Feb 2026. Arsenal 48% win, xG 1.6–1.1, Under 2.5 at 51%. GPT-4 analysis.' }},
+    { apiId:1003, slug:'spurs-vs-newcastle-2026-02-23', homeTeam:'Spurs', awayTeam:'Newcastle', homeEmoji:'⚪', awayEmoji:'⚫', matchDate:'2026-02-23T16:30:00Z', status:'NS',
+      prediction:{ homeWinProbability:36, drawProbability:30, awayWinProbability:34, confidenceScore:52, over25Probability:55, homeXG:1.4, awayXG:1.4, predictedWinner:'draw', expectedCorners:10.2, expectedYellowCards:4.5,
+        keyFacts:['Both teams in mid-table form — very evenly matched','Newcastle strong away: 4 wins in last 6','Spurs home record inconsistent this season','H2H: 40% of recent meetings end in draws'],
+        analysis:'<p>This is one of the most balanced fixtures of the weekend. Both sides show similar form and the expected goals model produces an almost identical projection — <strong>1.4 xG each</strong>.</p><p>With 30% draw probability and both win probabilities within 2 points of each other, the model confidence is just 52%, reflecting genuine uncertainty.</p>',
+        seoTitle:'Spurs vs Newcastle Prediction – Premier League GW27 | SmartFootballPredictions',
+        metaDescription:'AI prediction for Spurs vs Newcastle 23 Feb 2026. Draw predicted at 30%, xG 1.4–1.4. GPT-4 analysis.' }},
+  ]},
+  { league:'La Liga', flag:'🇪🇸', country:'Spain', matches:[
+    { apiId:2001, slug:'real-madrid-vs-barcelona-2026-02-22', homeTeam:'Real Madrid', awayTeam:'Barcelona', homeEmoji:'⚪', awayEmoji:'🔵', matchDate:'2026-02-22T20:00:00Z', status:'2H', goalsHome:2, goalsAway:1,
+      prediction:{ homeWinProbability:55, drawProbability:22, awayWinProbability:23, confidenceScore:82, over25Probability:68, homeXG:1.9, awayXG:1.3, predictedWinner:'home', expectedCorners:11.4, expectedYellowCards:4.2,
+        keyFacts:['Real Madrid home record: 10W–1D–0L this season','Barcelona lost 3 of last 7 away fixtures in all comps','El Clásico at Bernabéu: Real win 58% historically','Real Madrid attack strength index: 1.38 — league highest'],
+        analysis:'<p>El Clásico at the Santiago Bernabéu sees Real Madrid arrive in exceptional form — 8 points clear at the top with a 10-match unbeaten home run. Our model gives them a <strong>55% win probability</strong>.</p><p>Expected goals of <strong>1.9–1.3</strong> translate to a <strong>68% probability of Over 2.5 goals</strong>. The model\'s most likely scoreline is 2–1 to Real Madrid at 16.1% probability.</p>',
+        seoTitle:'Real Madrid vs Barcelona Prediction – El Clásico La Liga | SmartFootballPredictions',
+        metaDescription:'AI prediction for El Clásico 22 Feb 2026. Real Madrid 55% win, xG 1.9–1.3, Over 2.5 at 68%. GPT-4 analysis.' }},
+    { apiId:2002, slug:'atletico-vs-valencia-2026-02-23', homeTeam:'Atletico Madrid', awayTeam:'Valencia', homeEmoji:'🔴', awayEmoji:'🟠', matchDate:'2026-02-23T16:15:00Z', status:'NS',
+      prediction:{ homeWinProbability:58, drawProbability:22, awayWinProbability:20, confidenceScore:71, over25Probability:44, homeXG:1.6, awayXG:0.9, predictedWinner:'home', expectedCorners:9.5, expectedYellowCards:5.2,
+        keyFacts:['Atletico: best home defensive record in La Liga this season','Valencia winless in last 5 away matches','Atletico low-scoring style supports Under 2.5','xG points to tight 1–0 Atletico win'],
+        analysis:'<p>Diego Simeone\'s Atletico Madrid have the best home defensive record in La Liga and the model heavily favours them at <strong>58% win probability</strong>.</p><p>Valencia\'s away form has been dismal — no wins in 5 fixtures. The xG projection of 1.6–0.9 strongly suggests a low-scoring Atletico win, making Under 2.5 goals attractive at 56% probability.</p>',
+        seoTitle:'Atletico Madrid vs Valencia Prediction – La Liga | SmartFootballPredictions',
+        metaDescription:'AI prediction for Atletico vs Valencia 23 Feb 2026. Atletico 58% win, xG 1.6–0.9. GPT-4 analysis.' }},
+  ]},
+  { league:'Primeira Liga', flag:'🇵🇹', country:'Portugal', matches:[
+    { apiId:3001, slug:'benfica-vs-porto-2026-02-22', homeTeam:'Benfica', awayTeam:'Porto', homeEmoji:'🔴', awayEmoji:'🔵', matchDate:'2026-02-22T20:30:00Z', status:'2H', goalsHome:1, goalsAway:1,
+      prediction:{ homeWinProbability:46, drawProbability:28, awayWinProbability:26, confidenceScore:64, over25Probability:59, homeXG:1.7, awayXG:1.3, predictedWinner:'home', expectedCorners:10.1, expectedYellowCards:4.6,
+        keyFacts:['O Clássico: 38% of meetings end in draws historically','Benfica top scorer averages 1.4 goals per home game','Porto strong away form: 4 wins last 6','Both GKs among the best in Portugal this season'],
+        analysis:'<p>O Clássico português is always competitive and the model reflects this evenly — <strong>46% Benfica win</strong>, 28% draw, 26% Porto win.</p><p>Both teams capable of scoring, giving Over 2.5 goals a 59% probability. The current live score of 1–1 is fully consistent with the model projection.</p>',
+        seoTitle:'Benfica vs Porto Prediction – O Clássico Primeira Liga | SmartFootballPredictions',
+        metaDescription:'AI prediction for Benfica vs Porto. Benfica 46% win, xG 1.7–1.3. Full GPT-4 analysis.' }},
+  ]},
+  { league:'Brasileirão A', flag:'🇧🇷', country:'Brazil', matches:[
+    { apiId:4001, slug:'flamengo-vs-palmeiras-2026-02-22', homeTeam:'Flamengo', awayTeam:'Palmeiras', homeEmoji:'🔴', awayEmoji:'🟢', matchDate:'2026-02-22T22:00:00Z', status:'NS',
+      prediction:{ homeWinProbability:44, drawProbability:28, awayWinProbability:28, confidenceScore:56, over25Probability:61, homeXG:1.6, awayXG:1.4, predictedWinner:'home', expectedCorners:9.8, expectedYellowCards:4.9,
+        keyFacts:['Brazil\'s biggest club rivalry — Fla-Pal','Flamengo strong at Maracanã this season','Palmeiras best away record in Brazil','Both squads have international regulars in form'],
+        analysis:'<p>Brazil\'s biggest rivalry delivers the headline fixture of Brasileirão Round 8. The model gives Flamengo a narrow <strong>44% win probability</strong> at home at the Maracanã.</p><p>With both sides capable of scoring, Over 2.5 goals is projected at 61% — one of the better value angles of the weekend.</p>',
+        seoTitle:'Flamengo vs Palmeiras Prediction – Brasileirão A | SmartFootballPredictions',
+        metaDescription:'AI prediction for Flamengo vs Palmeiras Brasileirão 2026. Flamengo 44% win, xG 1.6–1.4. GPT-4 analysis.' }},
+    { apiId:4002, slug:'corinthians-vs-sao-paulo-2026-02-23', homeTeam:'Corinthians', awayTeam:'São Paulo', homeEmoji:'⚫', awayEmoji:'🔴', matchDate:'2026-02-23T00:30:00Z', status:'NS',
+      prediction:{ homeWinProbability:38, drawProbability:32, awayWinProbability:30, confidenceScore:50, over25Probability:52, homeXG:1.4, awayXG:1.3, predictedWinner:'home', expectedCorners:9.2, expectedYellowCards:5.1,
+        keyFacts:['Paulistão Derby — intense local rivalry','Corinthians Arena advantage significant','São Paulo travel well: 4 draws in last 5 away','Expected to be a tightly contested match'],
+        analysis:'<p>The Paulistão Derby is always tense. The model gives Corinthians a slight edge at <strong>38%</strong> at home, but a draw at 32% is equally plausible given the rivalry context.</p>',
+        seoTitle:'Corinthians vs São Paulo Prediction – Brasileirão | SmartFootballPredictions',
+        metaDescription:'AI prediction for Corinthians vs São Paulo 2026. Corinthians 38% win. GPT-4 analysis.' }},
+  ]},
+  { league:'Bundesliga', flag:'🇩🇪', country:'Germany', matches:[
+    { apiId:5001, slug:'bayern-vs-leverkusen-2026-02-22', homeTeam:'Bayern Munich', awayTeam:'Bayer Leverkusen', homeEmoji:'🔴', awayEmoji:'⚫', matchDate:'2026-02-22T17:30:00Z', status:'NS',
+      prediction:{ homeWinProbability:48, drawProbability:24, awayWinProbability:28, confidenceScore:64, over25Probability:71, homeXG:2.0, awayXG:1.6, predictedWinner:'home', expectedCorners:11.8, expectedYellowCards:3.5,
+        keyFacts:['Modern Der Klassiker — title race crucial match','Bayern highest xG in Bundesliga this season','Leverkusen won last season\'s title — strong away form','3 of last 4 H2H meetings produced 3+ goals'],
+        analysis:'<p>The modern Bundesliga title rivalry. Bayern at the Allianz Arena vs the defending champions produces one of the highest-quality fixtures in Germany.</p><p>The model projects both sides to score, with Over 2.5 goals at <strong>71% probability</strong> — the highest of the weekend. Bayern\'s xG of 2.0 per home game is exceptional, but Leverkusen\'s 1.6 away xG makes this far from one-sided.</p>',
+        seoTitle:'Bayern Munich vs Leverkusen Prediction – Bundesliga | SmartFootballPredictions',
+        metaDescription:'AI prediction for Bayern vs Leverkusen 22 Feb 2026. Bayern 48% win, xG 2.0–1.6, Over 2.5 at 71%. GPT-4 analysis.' }},
+  ]},
+];
+
+const BLOGS = [
+  { slug:'best-predictions-weekend-2026-02-22', title:'Best Football Predictions This Weekend – 31 Matches Analysed by AI', category:'weekend-picks', excerpt:'Our Poisson model has processed stats for all 31 Saturday matches. From the PL title showdown to El Clásico, here are the highest-confidence picks for your weekend.', createdAt:'2026-02-22T07:00:00Z', readingTime:6,
+    content:`<div class="hl-box"><strong>Top Pick:</strong> Manchester City vs Liverpool (Premier League) — 75% model confidence. Over 2.5 goals at 63%.</div><h2>Premier League — Saturday Highlights</h2><p>This Saturday brings one of the most anticipated Premier League matchdays of the season. Our Poisson model has processed the last 5 matches of form data for every team.</p><div class="mref" onclick="go('match','man-city-vs-liverpool-2026-02-22')"><div><div class="mref-teams">🔵 Manchester City vs Liverpool 🔴</div><div class="mref-meta">Premier League · Sat 22 Feb · 20:45 UTC</div></div><div class="mref-cta">Full Prediction →</div></div><p>Man City at home remains one of the most reliable statistical profiles in European football. With a home xG of 2.1 and Liverpool conceding 1.4 away, Over 2.5 goals carries strong model backing at <strong>63% probability</strong>.</p><h2>La Liga — El Clásico</h2><p>Real Madrid's form has been exceptional — 10 wins in their last 11 home games. The model gives them a <strong>55% win probability</strong> against Barcelona.</p><div class="mref" onclick="go('match','real-madrid-vs-barcelona-2026-02-22')"><div><div class="mref-teams">⚪ Real Madrid vs Barcelona 🔵</div><div class="mref-meta">La Liga · LIVE 67' · 2–1</div></div><div class="mref-cta">Full Prediction →</div></div><h2>Our Top 3 Confidence Picks</h2><div class="mref" onclick="go('match','real-madrid-vs-barcelona-2026-02-22')"><div><div class="mref-teams">1. Real Madrid vs Barcelona — La Liga</div><div class="mref-meta">Confidence: 82%</div></div><div class="mref-cta">View →</div></div><div class="mref" onclick="go('match','man-city-vs-liverpool-2026-02-22')"><div><div class="mref-teams">2. Man City vs Liverpool — PL</div><div class="mref-meta">Confidence: 75%</div></div><div class="mref-cta">View →</div></div><div class="mref" onclick="go('match','atletico-vs-valencia-2026-02-23')"><div><div class="mref-teams">3. Atletico Madrid vs Valencia — La Liga</div><div class="mref-meta">Confidence: 71%</div></div><div class="mref-cta">View →</div></div><div class="disc-box">⚠️ All predictions generated by AI statistical models. For entertainment purposes only. Not betting advice. Always gamble responsibly. 18+</div>` },
+  { slug:'el-clasico-analysis-2026', title:'El Clásico Statistical Breakdown – Data Gives Real Madrid the Edge in 2026', category:'analysis', excerpt:'With Real Madrid 8 points clear, the model gives Los Blancos a 55% win probability. We break down attack ratings, form, and H2H data in full.', createdAt:'2026-02-21T09:00:00Z', readingTime:5,
+    content:`<div class="hl-box"><strong>Key stat:</strong> Real Madrid win probability vs Barcelona: <strong>55%</strong> — highest our model has assigned in 4 seasons.</div><h2>Why Real Madrid Are Favoured</h2><p>Eight points clear at the top of La Liga, Real Madrid arrive at the Bernabéu in the form of their lives. Their home record reads 10W–1D–0L — a statistical profile our Poisson model rates as exceptional.</p><h3>Attack Strength Rating</h3><p>Real Madrid's attack strength index stands at 1.38 — calculated as average goals scored divided by league average, multiplied by home advantage (1.15). Barcelona's away attack index is 1.19, giving Madrid a clear edge in expected goals.</p><h2>Expected Goals: 1.9 – 1.3</h2><p>Our model produces 1.9 xG for Real Madrid and 1.3 for Barcelona, translating to a <strong>68% probability of Over 2.5 goals</strong>. Historically, 63% of Clásicos at the Bernabéu have produced 3+ goals.</p><div class="mref" onclick="go('match','real-madrid-vs-barcelona-2026-02-22')"><div><div class="mref-teams">⚪ Real Madrid vs Barcelona — Full Prediction</div><div class="mref-meta">82% Confidence · La Liga Jornada 25</div></div><div class="mref-cta">Full Analysis →</div></div><div class="disc-box">⚠️ For entertainment purposes only. Not betting advice. 18+</div>` },
+  { slug:'brasileirao-round-8-preview', title:'Brasileirão Round 8 – Flamengo vs Palmeiras & Top 5 Weekend Predictions', category:'daily-preview', excerpt:'Brazilian football\'s most electric weekend of the season. Flamengo vs Palmeiras tops our value chart at 56% confidence.', createdAt:'2026-02-20T08:00:00Z', readingTime:5,
+    content:`<div class="hl-box"><strong>Best Pick:</strong> Flamengo vs Palmeiras — Over 2.5 goals at 61% probability.</div><h2>Flamengo vs Palmeiras</h2><p>Brazil's biggest rivalry delivers the must-watch fixture of Round 8. The model gives Flamengo a slight home advantage at <strong>44% win probability</strong> at the Maracanã.</p><div class="mref" onclick="go('match','flamengo-vs-palmeiras-2026-02-22')"><div><div class="mref-teams">🔴 Flamengo vs Palmeiras 🟢</div><div class="mref-meta">Brasileirão A · Sat 22 Feb · 22:00 UTC</div></div><div class="mref-cta">Full Prediction →</div></div><h2>Corinthians vs São Paulo</h2><p>The Paulistão Derby is always intense. The model projects a tight encounter with Corinthians at 38% — only narrowly ahead of a draw at 32%.</p><div class="disc-box">⚠️ For entertainment purposes only. Not betting advice. 18+</div>` },
+  { slug:'bundesliga-gw23-preview', title:'Bundesliga Preview – Bayern vs Leverkusen Headlines Another Huge Weekend', category:'daily-preview', excerpt:'Der Klassiker of the modern era returns. Bayern and Leverkusen meet in what the model rates as the highest xG fixture of the season.', createdAt:'2026-02-19T10:00:00Z', readingTime:6,
+    content:`<div class="hl-box"><strong>High-scoring alert:</strong> Bayern vs Leverkusen — Over 2.5 goals at <strong>71%</strong>, highest probability of the weekend.</div><h2>Bayern Munich vs Bayer Leverkusen</h2><p>The modern Bundesliga title decider. Bayern at the Allianz Arena vs the defending champions — both in the title race.</p><div class="mref" onclick="go('match','bayern-vs-leverkusen-2026-02-22')"><div><div class="mref-teams">🔴 Bayern Munich vs Bayer Leverkusen ⚫</div><div class="mref-meta">Bundesliga · Sat 22 Feb · 17:30 UTC</div></div><div class="mref-cta">Full Prediction →</div></div><div class="disc-box">⚠️ For entertainment purposes only. Not betting advice. 18+</div>` },
+  { slug:'accuracy-review-week07', title:'Last Week\'s Predictions: 72% Accuracy – Full Results Breakdown', category:'results-review', excerpt:'We correctly predicted 18 of 25 resolved matches last week. Bundesliga was our best league at 81%. Full breakdown of what worked and what did not.', createdAt:'2026-02-17T09:00:00Z', readingTime:7,
+    content:`<div class="hl-box"><strong>Last week:</strong> 18 correct of 25 predictions = <strong>72% accuracy</strong>. Best league: Bundesliga (83%).</div><h2>Overall Performance</h2><p>Week 7 was a strong performance from our statistical model. We correctly predicted the outcome in 18 of 25 resolved fixtures.</p><h2>By League</h2><ul><li>Bundesliga: 5/6 correct (83%)</li><li>Premier League: 4/5 correct (80%)</li><li>Brasileirão A: 4/5 correct (80%)</li><li>Primeira Liga: 3/4 correct (75%)</li><li>La Liga: 3/5 correct (60%)</li><li>Serie A: 2/4 correct (50%)</li></ul><div class="disc-box">⚠️ Past accuracy does not guarantee future results. For entertainment only. 18+</div>` },
+  { slug:'benfica-porto-clasico-preview', title:'Benfica vs Porto – O Clássico Português Statistical Preview & Prediction', category:'analysis', excerpt:'Portugal\'s biggest rivalry is live this weekend. The model gives Benfica 46% — historically the most unpredictable fixture in Liga Portugal.', createdAt:'2026-02-18T09:00:00Z', readingTime:4,
+    content:`<div class="hl-box"><strong>O Clássico Português</strong> — the most unpredictable fixture in Liga Portugal. Model confidence: 64%.</div><h2>Match Analysis</h2><p>The Benfica vs Porto rivalry produces results that defy form books. The model gives Benfica a narrow <strong>46% win probability</strong> at home.</p><div class="mref" onclick="go('match','benfica-vs-porto-2026-02-22')"><div><div class="mref-teams">🔴 Benfica vs Porto 🔵</div><div class="mref-meta">Primeira Liga · LIVE 55' · 1–1</div></div><div class="mref-cta">Full Prediction →</div></div><div class="disc-box">⚠️ For entertainment purposes only. Not betting advice. 18+</div>` },
+];
+
+const ACCURACY_SAMPLE = {
+  overall:{ total:120, correct:86, accuracy:72 },
+  byLeague:[
+    { league:'Champions League', total:18, correct:15, accuracy:83 },
+    { league:'Bundesliga', total:16, correct:13, accuracy:81 },
+    { league:'Brasileirão A', total:14, correct:11, accuracy:79 },
+    { league:'Primeira Liga', total:12, correct:9, accuracy:75 },
+    { league:'Premier League', total:16, correct:12, accuracy:75 },
+    { league:'Championship', total:20, correct:14, accuracy:70 },
+    { league:'La Liga', total:16, correct:11, accuracy:69 },
+    { league:'Serie A', total:14, correct:9, accuracy:64 },
+    { league:'Ligue 1', total:14, correct:9, accuracy:64 },
+  ]
+};
+
+// ── HELPERS ──────────────────────────────────────────────────────────
+function fmtTime(d){ const dt=new Date(d); return dt.getUTCHours().toString().padStart(2,'0')+':'+dt.getUTCMinutes().toString().padStart(2,'0'); }
+function fmtDate(d){ const dt=new Date(d); return dt.toLocaleDateString('en-GB',{day:'numeric',month:'short'}); }
+function fmtDateFull(d){ const dt=new Date(d); return dt.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'}); }
+function isLiveStatus(s){ return ['1H','2H','HT','ET','BT','P'].includes(s); }
+function isFT(s){ return ['FT','AET','PEN'].includes(s); }
+function allMatches(){ return GROUPS.flatMap(g=>g.matches.map(m=>({...m,leagueName:g.league,flag:g.flag}))); }
+function findGroup(slug){ return GROUPS.find(g=>g.matches.some(m=>m.slug===slug)); }
+function findMatch(slug){ return allMatches().find(m=>m.slug===slug); }
+function confClass(v){ return v>=70?'ch':v>=55?'cm':'cl'; }
+
+// ── API LAYER — with sample data fallback ────────────────────────────
+async function apiGet(url){
+  try{
+    const r=await fetch(url,{signal:AbortSignal.timeout(5000)});
+    if(!r.ok) throw new Error('API '+r.status);
+    const d=await r.json();
+    if(!d.success) throw new Error('no data');
+    return d;
+  }catch(e){ return null; }
+}
+
+// ── ROUTER ────────────────────────────────────────────────────────────
+function go(page, extraArg){
+  // hide all
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.sbi').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nl').forEach(n=>n.classList.remove('on'));
+
+  S.page=page;
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  // nav highlight
+  const navMap={home:'nl-home',matches:'nl-matches',blog:'nl-blog','blog-post':'nl-blog',accuracy:'nl-accuracy',match:'nl-matches'};
+  if(navMap[page]) document.getElementById(navMap[page])?.classList.add('on');
+
+  // sidebar highlight
+  const sbMap={home:0,matches:1,blog:2,'blog-post':2,accuracy:3,match:1};
+  if(sbMap[page]!==undefined) document.querySelectorAll('.sbi')[sbMap[page]]?.classList.add('on');
+
+  // route
+  if(page==='home')         { document.getElementById('pg-home').classList.add('on'); loadHome(); }
+  else if(page==='matches') { document.getElementById('pg-matches').classList.add('on'); loadMatches(); }
+  else if(page==='match')   { S.matchSlug=extraArg||S.matchSlug; document.getElementById('pg-match').classList.add('on'); loadMatch(); }
+  else if(page==='blog')    { document.getElementById('pg-blog').classList.add('on'); loadBlog(); }
+  else if(page==='blog-post'){ S.blogSlug=extraArg||S.blogSlug; document.getElementById('pg-blog-post').classList.add('on'); loadBlogPost(); }
+  else if(page==='accuracy'){ document.getElementById('pg-accuracy').classList.add('on'); loadAccuracy(); }
+
+  // update doc title
+  const titles={home:'SmartFootballPredictions.com – AI Football Predictions',matches:'All Predictions This Week | SmartFootballPredictions',blog:'AI Football Blog | SmartFootballPredictions',accuracy:'Prediction Accuracy | SmartFootballPredictions'};
+  if(titles[page]) document.getElementById('doc-title').textContent=titles[page];
+}
+
+function goNav(page,el){
+  document.querySelectorAll('.nl').forEach(n=>n.classList.remove('on'));
+  el.classList.add('on');
+  go(page);
+}
+
+// ── BUILD DATE TABS ───────────────────────────────────────────────────
+function buildDateTabs(){
+  const tab=document.getElementById('date-tabs'); if(!tab) return;
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const now=new Date(); let html='';
+  for(let i=0;i<7;i++){
+    const d=new Date(now); d.setDate(d.getDate()+i);
+    const active=i===0?'on':'';
+    const cnt=[5,8,6,4,7,9,6][i];
+    html+=`<div class="dt ${active}" onclick="document.querySelectorAll('.dt').forEach(x=>x.classList.remove('on'));this.classList.add('on')">
+      <div class="dt-d">${days[d.getDay()]}</div>
+      <div class="dt-n">${d.getDate()}</div>
+      <div class="dt-c">${cnt}</div>
+    </div>`;
+  }
+  tab.innerHTML=html;
+}
+
+// ── RENDER LEAGUE GROUP ────────────────────────────────────────────────
+function renderGroup(g){
+  const rows=g.matches.map(m=>{
+    const p=m.prediction; if(!p) return '';
+    const live=isLiveStatus(m.status); const ft=isFT(m.status);
+    const timeCell=live
+      ?`<div class="s-live">● ${m.status==='HT'?'HT':'LIVE'}</div>`
+      :ft?`<div class="s-live" style="color:var(--text3);background:var(--bg4);animation:none">FT</div>`
+      :`<div class="t-col">${fmtTime(m.matchDate)}</div><div class="t-dsm">${fmtDate(m.matchDate)}</div>`;
+    const scoreCell=(live||ft)&&m.goalsHome!==undefined
+      ?`<div class="score">${m.goalsHome}–${m.goalsAway}</div>`
+      :`<div class="vs">VS</div>`;
+    const homeB=p.predictedWinner==='home'?'b':'';
+    const awayB=p.predictedWinner==='away'?'b':'';
+    const ouTag=p.over25Probability>=60?`<div class="ou-tag">O/2.5</div>`:'';
+    const hw=p.homeWinProbability, dw=p.drawProbability, aw=p.awayWinProbability;
+    return `<div class="mr" onclick="go('match','${m.slug}')">
+      <div>${timeCell}</div>
+      <div class="tc"><div class="badge-t">${m.homeEmoji||'⚽'}</div><div class="tn ${homeB}">${m.homeTeam}</div></div>
+      <div class="score-c">${scoreCell}</div>
+      <div class="tc r"><div class="tn ${awayB}">${m.awayTeam}</div><div class="badge-t">${m.awayEmoji||'⚽'}</div></div>
+      <div class="prob-c">
+        <div class="pb"><div class="ps ph" style="width:${hw*0.9}px"></div><div class="ps pd" style="width:${dw*0.9}px"></div><div class="ps pa" style="width:${aw*0.9}px"></div></div>
+        <div class="pnums"><span style="color:var(--green)">${hw}%</span><span>${dw}%</span><span style="color:var(--blue)">${aw}%</span></div>
+      </div>
+      <div class="conf-c"><div class="conf-v ${confClass(p.confidenceScore)}">${p.confidenceScore}%</div>${ouTag}</div>
+      <div class="mr-cta">Full Prediction →</div>
+    </div>`;
+  }).join('');
+  return `<div class="lg">
+    <div class="lg-hd" onclick="this.closest('.lg').classList.toggle('closed')">
+      <span class="lg-flag">${g.flag}</span>
+      <div><div class="lg-name">${g.league}</div><div class="lg-sub">${g.country}</div></div>
+      <div class="lg-r"><span class="lg-cnt">${g.matches.length} match${g.matches.length!==1?'es':''}</span><span class="chev">▾</span></div>
+    </div>
+    <div class="tbl-hd"><div class="th c">Time</div><div class="th">Home</div><div class="th c">Score</div><div class="th">Away</div><div class="th c">Prediction</div><div class="th c">Conf</div><div class="th c">Action</div></div>
+    <div class="lg-body">${rows}</div>
+  </div>`;
+}
+
+// ── RENDER BLOG CARD ──────────────────────────────────────────────────
+function renderBlogCard(b){
+  const imgCls={weekend:'pl','weekend-picks':'pl','daily-preview':'bl','analysis':'ll','results-review':'cl'}[b.category]||'sa';
+  const catCls={weekend:'cat-wp','weekend-picks':'cat-wp','daily-preview':'cat-pr','analysis':'cat-an','results-review':'cat-re'}[b.category]||'cat-pr';
+  const catLbl={weekend:'WEEKEND','weekend-picks':'WEEKEND PICKS','daily-preview':'DAILY PREVIEW','analysis':'ANALYSIS','results-review':'RESULTS'}[b.category]||'BLOG';
+  const d=new Date(b.createdAt);
+  return `<div class="bc" onclick="go('blog-post','${b.slug}')">
+    <div class="bc-img ${imgCls}">⚽</div>
+    <div class="bc-body">
+      <span class="bc-cat ${catCls}">${catLbl}</span>
+      <div class="bc-title">${b.title}</div>
+      <div class="bc-excerpt">${b.excerpt||''}</div>
+      <div class="bc-foot">
+        <span class="bc-date">📅 ${d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})} · ${b.readingTime||5} min</span>
+        <span class="bc-read">Read →</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── LOAD HOME ─────────────────────────────────────────────────────────
+async function loadHome(){
+  // matches
+  let groups=GROUPS;
+  const live=await apiGet(API.matches+'?days=2');
+  if(live&&live.grouped&&live.grouped.length) groups=live.grouped;
+  S.allGroups=groups;
+
+  // show first 2 leagues on home
+  const homeMatches=document.getElementById('home-matches');
+  if(homeMatches) homeMatches.innerHTML=groups.slice(0,2).map(renderGroup).join('');
+
+  // blogs
+  let blogs=BLOGS;
+  const lb=await apiGet(API.blogs+'?limit=3');
+  if(lb&&lb.blogs&&lb.blogs.length) blogs=lb.blogs;
+  S.allBlogs=blogs;
+
+  const hb=document.getElementById('home-blogs');
+  if(hb) hb.innerHTML=blogs.slice(0,3).map(renderBlogCard).join('');
+
+  // accuracy
+  const acc=await apiGet(API.accuracy);
+  if(acc&&acc.overall){
+    const a=acc.overall.accuracy;
+    document.getElementById('stat-acc').textContent=a+'%';
+    document.getElementById('sb-acc').textContent=a+'%';
+  }
+}
+
+// ── LOAD MATCHES ──────────────────────────────────────────────────────
+async function loadMatches(){
+  buildDateTabs();
+  let groups=S.allGroups.length?S.allGroups:GROUPS;
+  const live=await apiGet(API.matches+'?days=7');
+  if(live&&live.grouped&&live.grouped.length){ groups=live.grouped; S.allGroups=groups; }
+
+  renderMatchGroups(groups, S.filter);
+
+  const total=groups.reduce((a,g)=>a+g.matches.length,0);
+  document.getElementById('total-count').textContent=total;
+  document.getElementById('sb-total').textContent=total;
+}
+
+function renderMatchGroups(groups, filter){
+  const mc=document.getElementById('matches-container'); if(!mc) return;
+  const filtered=filter==='all'?groups:groups.filter(g=>g.league===filter||g.leagueName===filter);
+  if(!filtered.length){ mc.innerHTML='<div class="empty-state"><div class="icon">📭</div>No matches found for this filter.</div>'; return; }
+  mc.innerHTML=filtered.map(renderGroup).join('');
+}
+
+function setFilter(f, el){
+  document.querySelectorAll('.fbar .fb').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  S.filter=f;
+  renderMatchGroups(S.allGroups.length?S.allGroups:GROUPS, f);
+}
+
+function toggleSort(){
+  S.sortAsc=!S.sortAsc;
+  const btn=document.getElementById('sort-btn');
+  if(btn) btn.textContent='Sort: Time '+(S.sortAsc?'↑':'↓');
+}
+
+// ── LOAD MATCH DETAIL ─────────────────────────────────────────────────
+async function loadMatch(){
+  const slug=S.matchSlug; if(!slug) return;
+  const mc=document.getElementById('match-content');
+  if(mc) mc.innerHTML='<div class="loading-row"><div class="spin"></div>Loading prediction...</div>';
+
+  let match=findMatch(slug);
+  const live=await apiGet(API.prediction+'?slug='+slug);
+  if(live&&live.prediction){ match={...live.fixture,...live.prediction,prediction:live.prediction,homeEmoji:match?.homeEmoji,awayEmoji:match?.awayEmoji}; }
+
+  if(!match||!match.prediction){ if(mc) mc.innerHTML='<div class="empty-state"><div class="icon">🔍</div>Prediction not found.</div>'; return; }
+
+  const p=match.prediction||match;
+  const lg=findGroup(slug)||{league:'Football',flag:'⚽',country:''};
+  const live2=isLiveStatus(match.status);
+  const winner=p.predictedWinner==='home'?match.homeTeam:p.predictedWinner==='away'?match.awayTeam:'Draw';
+  const ringOffset=Math.round(201*(1-p.confidenceScore/100));
+  const ouTxt=p.over25Probability>=50
+    ?`<div class="ou-big">✓ Over 2.5 Goals – ${p.over25Probability}% probability</div>`
+    :`<div class="ou-big" style="background:var(--blue2);border-color:rgba(61,142,255,0.15);color:var(--blue)">→ Under 2.5 Goals – ${100-p.over25Probability}% probability</div>`;
+  const kfHtml=(p.keyFacts||[]).map(f=>`<div class="kf"><span class="kf-arr">▸</span>${f}</div>`).join('');
+  const anaHtml=(p.analysis||'').includes('<p>')?p.analysis:`<p>${p.analysis||'AI analysis generating...'}</p>`;
+
+  const related=allMatches().filter(m=>m.slug!==slug&&m.prediction).slice(0,4)
+    .map(m=>`<div class="rel-card" onclick="go('match','${m.slug}')"><div><div class="rel-match">${m.homeTeam} vs ${m.awayTeam}</div><div class="rel-sub">${m.leagueName||lg.league} · ${fmtDate(m.matchDate)}</div></div><div class="rel-conf">${m.prediction.confidenceScore}% →</div></div>`).join('');
+
+  const liveTag=live2
+    ?`<span style="color:var(--red);font-family:var(--font-m);font-size:0.66rem;font-weight:700;margin-left:auto">● LIVE ${match.goalsHome}–${match.goalsAway}</span>`
+    :`<span style="font-family:var(--font-m);font-size:0.66rem;color:var(--green);margin-left:auto">${fmtDateFull(match.matchDate)} · ${fmtTime(match.matchDate)} UTC</span>`;
+
+  const urlSlug=`smartfootballpredictions.com/predictions/${(lg.league||'football').toLowerCase().replace(/\s+/g,'-')}/${slug}`;
+  document.getElementById('doc-title').textContent=p.seoTitle||`${match.homeTeam} vs ${match.awayTeam} Prediction | SmartFootballPredictions`;
+
+  if(mc) mc.innerHTML=`
+    <div class="breadcrumb">
+      <span class="bc-link" onclick="go('home')">Home</span><span class="bc-sep">/</span>
+      <span class="bc-link" onclick="go('matches')">Predictions</span><span class="bc-sep">/</span>
+      <span class="bc-link">${lg.league}</span><span class="bc-sep">/</span>
+      <span style="color:var(--text)">${match.homeTeam} vs ${match.awayTeam}</span>
+    </div>
+    <h1 class="match-h1">${match.homeTeam} vs ${match.awayTeam} Prediction – ${lg.league}</h1>
+    <p class="match-meta-desc">${p.metaDescription||'AI statistical prediction for '+match.homeTeam+' vs '+match.awayTeam+' · '+lg.league+' · '+fmtDate(match.matchDate)}</p>
+
+    <div class="match-card">
+      <div class="mc-league"><span>${lg.flag}</span> ${lg.league} · ${lg.country} ${liveTag}</div>
+      <div class="teams-row">
+        <div class="team-blk">
+          <div class="team-crest">${match.homeEmoji||'⚽'}</div>
+          <div class="team-name-big">${match.homeTeam}</div>
+          <div class="team-role">Home</div>
+          <div class="team-form"><div class="fb-sq fw">W</div><div class="fb-sq fw">W</div><div class="fb-sq fd">D</div><div class="fb-sq fw">W</div><div class="fb-sq fl">L</div></div>
+        </div>
+        <div class="vs-blk">
+          <span class="vs-big">${live2?match.goalsHome+'–'+match.goalsAway:'VS'}</span>
+          <div class="pred-tag">⚡ ${winner} Predicted</div>
+        </div>
+        <div class="team-blk">
+          <div class="team-crest">${match.awayEmoji||'⚽'}</div>
+          <div class="team-name-big">${match.awayTeam}</div>
+          <div class="team-role">Away</div>
+          <div class="team-form"><div class="fb-sq fw">W</div><div class="fb-sq fd">D</div><div class="fb-sq fw">W</div><div class="fb-sq fl">L</div><div class="fb-sq fw">W</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="match-layout">
+      <div class="match-main">
+
+        <div class="scard">
+          <div class="scard-title"><div class="dot"></div>Win Probability</div>
+          <div class="prob-track">
+            <div class="prob-seg" style="width:${p.homeWinProbability}%;background:var(--green)">${p.homeWinProbability}%</div>
+            <div class="prob-seg" style="width:${p.drawProbability}%;background:var(--amber)">${p.drawProbability}%</div>
+            <div class="prob-seg" style="width:${p.awayWinProbability}%;background:var(--blue)">${p.awayWinProbability}%</div>
+          </div>
+          <div class="prob-vals">
+            <div class="pv"><div class="n" style="color:var(--green)">${p.homeWinProbability}%</div><div class="l">${match.homeTeam} Win</div></div>
+            <div class="pv"><div class="n" style="color:var(--amber)">${p.drawProbability}%</div><div class="l">Draw</div></div>
+            <div class="pv"><div class="n" style="color:var(--blue)">${p.awayWinProbability}%</div><div class="l">${match.awayTeam} Win</div></div>
+          </div>
+        </div>
+
+        <div class="mini2">
+          <div class="scard">
+            <div class="scard-title"><div class="dot"></div>Expected Goals</div>
+            <div class="goals-row">
+              <div><div class="gnum">${p.homeXG||1.5}</div><div style="font-size:0.62rem;color:var(--text3);text-align:center">${match.homeTeam}</div></div>
+              <div class="gsep">–</div>
+              <div><div class="gnum">${p.awayXG||1.1}</div><div style="font-size:0.62rem;color:var(--text3);text-align:center">${match.awayTeam}</div></div>
+            </div>
+            ${ouTxt}
+          </div>
+          <div class="scard" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <div class="scard-title"><div class="dot"></div>Model Confidence</div>
+            <div class="ring-wrap">
+              <svg class="ring-svg" viewBox="0 0 82 82"><circle class="ring-trk" cx="41" cy="41" r="32"/><circle class="ring-fill" cx="41" cy="41" r="32" style="stroke-dashoffset:${ringOffset}"/></svg>
+              <div class="ring-num">${p.confidenceScore}%</div>
+              <div class="ring-lbl">${p.confidenceScore>=70?'High confidence':p.confidenceScore>=55?'Medium confidence':'Lower confidence'}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mini2">
+          <div class="scard">
+            <div class="scard-title"><div class="dot"></div>Expected Corners 🚩</div>
+            <div style="display:flex;gap:0.6rem;margin-top:0.4rem">
+              <div class="msb" style="flex:1"><div class="msb-v">${p.expectedCorners?Math.round(p.expectedCorners*10/2)/10:'6.1'}</div><div class="msb-l">${match.homeTeam}</div></div>
+              <div class="msb" style="flex:1"><div class="msb-v">${p.expectedCorners?Math.round(p.expectedCorners*10*0.44)/10:'4.8'}</div><div class="msb-l">${match.awayTeam}</div></div>
+            </div>
+            <div style="text-align:center;font-size:0.7rem;color:var(--text2);margin-top:0.5rem">Total: <span style="color:#fff;font-family:var(--font-m)">${p.expectedCorners||10.9}</span></div>
+          </div>
+          <div class="scard">
+            <div class="scard-title"><div class="dot"></div>Expected Yellow Cards 🟨</div>
+            <div style="display:flex;gap:0.6rem;margin-top:0.4rem">
+              <div class="msb" style="flex:1"><div class="msb-v">${p.expectedYellowCards?Math.round(p.expectedYellowCards*5)/10:'1.8'}</div><div class="msb-l">${match.homeTeam}</div></div>
+              <div class="msb" style="flex:1"><div class="msb-v">${p.expectedYellowCards?Math.round(p.expectedYellowCards*5.2)/10:'2.1'}</div><div class="msb-l">${match.awayTeam}</div></div>
+            </div>
+            <div style="text-align:center;font-size:0.7rem;color:var(--text2);margin-top:0.5rem">Total: <span style="color:#fff;font-family:var(--font-m)">${p.expectedYellowCards||3.9}</span></div>
+          </div>
+        </div>
+
+        <div class="ai-blk">
+          <div class="ai-hd"><div class="ai-dot"></div><div class="ai-badge">GPT-4 ANALYSIS</div><div class="ai-model">Generated daily · OpenAI</div></div>
+          <div class="ai-body">
+            <div class="kfs">${kfHtml}</div>
+            <div class="ai-text">${anaHtml}</div>
+            <div class="ai-disc">⚠️ AI-generated analysis for informational purposes only. Statistical models do not guarantee outcomes. Not betting advice. Always gamble responsibly. 18+</div>
+          </div>
+        </div>
+
+        <div class="seo-box">
+          <div class="scard-title" style="margin-bottom:0.55rem"><div class="dot" style="background:var(--purple)"></div>SEO — This match has its own unique page URL</div>
+          <div style="background:var(--bg);border:1px solid var(--border2);border-radius:7px;padding:0.8rem">
+            <div class="seo-url">${urlSlug}</div>
+            <div class="seo-t">${p.seoTitle||match.homeTeam+' vs '+match.awayTeam+' Prediction | SmartFootballPredictions'}</div>
+            <div class="seo-d">${p.metaDescription||'AI statistical prediction for this match.'}</div>
+          </div>
+          <div class="schema-tags"><span class="stag">SportsEvent Schema</span><span class="stag">BreadcrumbList</span><span class="stag">FAQPage</span><span class="stag">Article</span></div>
+        </div>
+
+      </div>
+
+      <div class="match-side">
+        <div class="scard">
+          <div class="scard-title"><div class="dot"></div>Quick Summary</div>
+          <div class="qs-row"><div class="qs-lbl">Predicted Winner</div><div class="qs-val g">${winner}</div></div>
+          <div class="qs-row"><div class="qs-lbl">Expected Goals</div><div class="qs-val">${p.homeXG||1.5} – ${p.awayXG||1.1}</div></div>
+          <div class="qs-row"><div class="qs-lbl">Over/Under 2.5</div><div class="qs-val ${p.over25Probability>=50?'g':'a'}">${p.over25Probability>=50?'Over ('+p.over25Probability+'%)':'Under ('+(100-p.over25Probability)+'%)'}</div></div>
+          <div class="qs-row"><div class="qs-lbl">Expected Corners</div><div class="qs-val">${p.expectedCorners||10.9}</div></div>
+          <div class="qs-row"><div class="qs-lbl">Yellow Cards</div><div class="qs-val">${p.expectedYellowCards||3.9}</div></div>
+          <div class="qs-row"><div class="qs-lbl">Confidence</div><div class="qs-val g">${p.confidenceScore}%</div></div>
+        </div>
+
+        <div class="aff-card">
+          <div class="aff-title">⚡ Compare Odds</div>
+          <div class="aff-sub">Live odds from top bookmakers. 18+ · T&amp;Cs apply.</div>
+          <a class="aff-btn" href="#"><div class="aff-name">📊 Bet365</div><div class="aff-act">Check Odds →</div></a>
+          <a class="aff-btn" href="#"><div class="aff-name">🎯 William Hill</div><div class="aff-act">Bet Now →</div></a>
+          <a class="aff-btn" href="#"><div class="aff-name">📈 Betway</div><div class="aff-act">Live Odds →</div></a>
+          <div style="font-size:0.62rem;color:var(--text3);margin-top:0.5rem">Affiliate links. Not betting advice.</div>
+        </div>
+
+        <div class="scard">
+          <div class="scard-title"><div class="dot"></div>Related Predictions</div>
+          <div class="rel-list">${related||'<div style="font-size:0.76rem;color:var(--text3);padding:0.5rem 0">No related matches yet</div>'}</div>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:0.8rem">
+          <p style="font-size:0.67rem;color:var(--text3);line-height:1.55">⚠️ All predictions are generated by statistical AI models. For informational and entertainment purposes only. Never gamble more than you can afford to lose. BeGambleAware.org</p>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ── LOAD BLOG LIST ────────────────────────────────────────────────────
+async function loadBlog(){
+  const cat=S.blogCat;
+  let blogs=cat==='all'?BLOGS:BLOGS.filter(b=>b.category===cat);
+  const live=await apiGet(API.blogs+'?limit=12'+(cat!=='all'?'&category='+cat:''));
+  if(live&&live.blogs&&live.blogs.length){ blogs=live.blogs; S.allBlogs=live.blogs; }
+  const bc=document.getElementById('blog-container');
+  if(bc) bc.innerHTML=blogs.map(renderBlogCard).join('');
+}
+
+function setBlogCat(cat, el){
+  document.querySelectorAll('[onclick^="setBlogCat"]').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  S.blogCat=cat;
+  loadBlog();
+}
+
+// ── LOAD BLOG POST ────────────────────────────────────────────────────
+async function loadBlogPost(){
+  const slug=S.blogSlug; if(!slug) return;
+  const bpc=document.getElementById('blog-post-content');
+  if(bpc) bpc.innerHTML='<div class="loading-row"><div class="spin"></div>Loading article...</div>';
+
+  let blog=BLOGS.find(b=>b.slug===slug);
+  const live=await apiGet(API.blogs+'?slug='+slug);
+  if(live&&live.blog) blog=live.blog;
+
+  if(!blog){ if(bpc) bpc.innerHTML='<div class="empty-state"><div class="icon">🔍</div>Article not found.</div>'; return; }
+
+  const catCls={weekend:'cat-wp','weekend-picks':'cat-wp','daily-preview':'cat-pr','analysis':'cat-an','results-review':'cat-re'}[blog.category]||'cat-pr';
+  const catLbl={weekend:'WEEKEND','weekend-picks':'WEEKEND PICKS','daily-preview':'DAILY PREVIEW','analysis':'ANALYSIS','results-review':'RESULTS'}[blog.category]||'BLOG';
+  const d=new Date(blog.createdAt);
+  document.getElementById('doc-title').textContent=(blog.seoTitle||blog.title)+' | SmartFootballPredictions';
+
+  if(bpc) bpc.innerHTML=`
+    <div class="breadcrumb">
+      <span class="bc-link" onclick="go('home')">Home</span><span class="bc-sep">/</span>
+      <span class="bc-link" onclick="go('blog')">Blog</span><span class="bc-sep">/</span>
+      <span style="color:var(--text)">${blog.title.substring(0,40)}...</span>
+    </div>
+    <span class="bs-cat ${catCls}">${catLbl}</span>
+    <h1 class="bs-h1">${blog.title}</h1>
+    <div class="bs-meta">
+      <span>🤖 GPT-4 Generated</span>
+      <span>📅 ${d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</span>
+      <span>⏱ ${blog.readingTime||5} min read</span>
+    </div>
+    <div class="bs-body">${blog.content||'<p>'+blog.excerpt+'</p>'}</div>`;
+}
+
+// ── LOAD ACCURACY ─────────────────────────────────────────────────────
+async function loadAccuracy(){
+  let data=ACCURACY_SAMPLE;
+  const live=await apiGet(API.accuracy);
+  if(live&&live.overall) data=live;
+
+  const o=data.overall||{};
+  document.getElementById('acc-overall').textContent=(o.accuracy||72)+'%';
+  document.getElementById('acc-correct').textContent=o.correct||86;
+  document.getElementById('acc-total').textContent=o.total||120;
+
+  const leagues=data.byLeague||[];
+  const best=leagues.reduce((a,l)=>l.accuracy>a.accuracy?l:a,{league:'—',accuracy:0});
+  document.getElementById('acc-best').textContent=best.accuracy+'%';
+
+  const at=document.getElementById('acc-table');
+  if(at) at.innerHTML=leagues.map((l,i)=>`<div class="lt-row">
+    <div class="lt-lg"><span>${['🇪🇺','🇩🇪','🇧🇷','🇵🇹','🏴󠁧󠁢󠁥󠁮󠁧󠁿','🏴󠁧󠁢󠁥󠁮󠁧󠁿','🇪🇸','🇮🇹','🇫🇷'][i]||'🌍'}</span>${l.league}</div>
+    <div class="lt-n">${l.total}</div>
+    <div class="lt-n">${l.correct}</div>
+    <div class="lt-bar-wrap"><div class="lt-bar"><div class="lt-fill" style="width:${l.accuracy}%"></div></div></div>
+    <div class="lt-acc">${l.accuracy}%</div>
+  </div>`).join('');
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+loadHome();
+</script>
+</body>
+</html>
