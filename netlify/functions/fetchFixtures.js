@@ -14,13 +14,18 @@ exports.handler = async () => {
       };
     }
 
+    // ✅ Date range: today → next 7 days
     const today = new Date();
     const from = today.toISOString().split("T")[0];
+
+    const nextWeek = new Date();
+    nextWeek.setDate(nextWeek.getDate() + 7);
+    const to = nextWeek.toISOString().split("T")[0];
 
     const options = {
       host: "v3.football.api-sports.io",
       port: 443,
-      path: `/fixtures?league=39&season=2025&from=${from}`,
+      path: `/fixtures?league=39&season=2025&from=${from}&to=${to}`,
       method: "GET",
       headers: {
         "x-apisports-key": API_KEY,
@@ -53,7 +58,7 @@ exports.handler = async () => {
     });
 
     return {
-      statusCode: 200,
+      statusCode: apiResponse.status,
       body: apiResponse.body
     };
 
