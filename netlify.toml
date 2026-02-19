@@ -3,16 +3,15 @@
 # ================================================================
 
 [build]
-  base      = "/"
   publish   = "."
   functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
 
-# SPA redirect (IMPORTANT: exclude functions)
+# IMPORTANT: DO NOT redirect functions
 [[redirects]]
-  from   = "/api/*"
+  from   = "/predictions/*"
   to     = "/index.html"
   status = 200
 
