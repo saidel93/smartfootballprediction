@@ -1,17 +1,18 @@
 # ================================================================
 # SmartFootballPredictions.com — netlify.toml
 # ================================================================
+
 [build]
   base      = "/"
-  command   = "npm install"
   publish   = "."
   functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
 
+# SPA redirect (IMPORTANT: exclude functions)
 [[redirects]]
-  from   = "/*"
+  from   = "/api/*"
   to     = "/index.html"
   status = 200
 
