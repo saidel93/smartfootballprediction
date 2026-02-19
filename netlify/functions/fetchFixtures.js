@@ -10,16 +10,16 @@ exports.handler = async (event) => {
   }
 
   try {
-
     const API_KEY = process.env.FOOTBALL_API_KEY;
 
     if (!API_KEY) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ success: false, error: "FOOTBALL_API_KEY not set" })
+        body: JSON.stringify({ success: false, error: 'FOOTBALL_API_KEY not set' })
       };
     }
 
+    // Date range
     const today = new Date();
     const from = today.toISOString().split('T')[0];
 
@@ -27,9 +27,11 @@ exports.handler = async (event) => {
     nextWeek.setDate(nextWeek.getDate() + 7);
     const to = nextWeek.toISOString().split('T')[0];
 
+    const url = `/fixtures?league=39&season=2025&from=${from}&to=${to}`;
+
     const options = {
       hostname: 'v3.football.api-sports.io',
-      path: `/fixtures?league=39&season=2025&from=${from}&to=${to}`,
+      path: url,
       method: 'GET',
       headers: {
         'x-apisports-key': API_KEY,
@@ -37,43 +39,35 @@ exports.handler = async (event) => {
       }
     };
 
-    const data = await new Promise((resolve, reject) => {
+    const apiResponse = await new Promise((resolve, reject) => {
       const req = https.request(options, (res) => {
-
-        let body = '';
-
-        res.on('data', chunk => {
-          body += chunk;
-        });
-
-        res.on('end', () => {
-          try {
-            resolve(JSON.parse(body));
-          } catch (err) {
-            reject(new Error("Failed to parse API response: " + body));
-          }
-        });
-
+        let data = '';
+        res.on('data', chunk => data += chunk);
+        res.on('end', () => resolve({ status: res.statusCode, body: data }));
       });
 
-      req.on('error', err => reject(err));
+      req.on('error', reject);
       req.end();
     });
 
-    if (!data.response) {
+    if (apiResponse.status !== 200) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ success: false, error: "Invalid API response" })
+        body: JSON.stringify({
+          success: false,
+          error: `API status ${apiResponse.status}: ${apiResponse.body}`
+        })
       };
     }
 
+    const data = JSON.parse(apiResponse.body);
+
     const { db } = await connectToDatabase();
-    const col = db.collection('fixtures');
+    const fixturesCol = db.collection('fixtures');
 
     let inserted = 0;
-    let updated = 0;
 
-    for (const item of data.response) {
+    for (const item of data.response || []) {
 
       const f = item.fixture;
       const teams = item.teams;
@@ -82,11 +76,8 @@ exports.handler = async (event) => {
         apiId: f.id,
         leagueId: item.league.id,
         leagueName: item.league.name,
-        leagueCountry: item.league.country,
         homeTeam: teams.home.name,
-        homeTeamId: teams.home.id,
         awayTeam: teams.away.name,
-        awayTeamId: teams.away.id,
         matchDate: new Date(f.date),
         status: f.status.short,
         goalsHome: item.goals.home,
@@ -94,14 +85,13 @@ exports.handler = async (event) => {
         updatedAt: new Date()
       };
 
-      const result = await col.updateOne(
+      const result = await fixturesCol.updateOne(
         { apiId: f.id },
         { $set: doc },
         { upsert: true }
       );
 
       if (result.upsertedCount > 0) inserted++;
-      if (result.modifiedCount > 0) updated++;
     }
 
     return {
@@ -109,18 +99,15 @@ exports.handler = async (event) => {
       body: JSON.stringify({
         success: true,
         inserted,
-        updated,
         totalFetched: data.response.length
       })
     };
 
   } catch (error) {
+    console.error("fetchFixtures error:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        success: false,
-        error: error.message
-      })
+      body: JSON.stringify({ success: false, error: error.message })
     };
   }
 };
