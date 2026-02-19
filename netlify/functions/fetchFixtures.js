@@ -1,3 +1,5 @@
+// netlify/functions/fetchFixtures.js
+
 const https = require("https");
 const { connectToDatabase } = require("./utils/mongodb");
 
@@ -14,7 +16,7 @@ exports.handler = async () => {
       };
     }
 
-    // ✅ Date range: today → next 7 days
+    // Date range (today → 7 days)
     const today = new Date();
     const from = today.toISOString().split("T")[0];
 
@@ -45,10 +47,7 @@ exports.handler = async () => {
         });
 
         res.on("end", () => {
-          resolve({
-            status: res.statusCode,
-            body: data
-          });
+          resolve(JSON.parse(data));
         });
 
       });
@@ -57,12 +56,57 @@ exports.handler = async () => {
       req.end();
     });
 
+    if (!apiResponse.response) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: "Invalid API response" })
+      };
+    }
+
+    // 🔥 CONNECT TO MONGODB
+    const { db } = await connectToDatabase();
+    const fixturesCol = db.collection("fixtures");
+
+    let inserted = 0;
+
+    for (const item of apiResponse.response) {
+
+      const f = item.fixture;
+      const teams = item.teams;
+
+      const doc = {
+        apiId: f.id,
+        homeTeam: teams.home.name,
+        awayTeam: teams.away.name,
+        matchDate: new Date(f.date),
+        status: f.status.short,
+        goalsHome: item.goals.home,
+        goalsAway: item.goals.away,
+        createdAt: new Date()
+      };
+
+      const result = await fixturesCol.updateOne(
+        { apiId: f.id },
+        { $set: doc },
+        { upsert: true }
+      );
+
+      if (result.upsertedCount > 0) inserted++;
+    }
+
     return {
-      statusCode: apiResponse.status,
-      body: apiResponse.body
+      statusCode: 200,
+      body: JSON.stringify({
+        success: true,
+        inserted,
+        totalFetched: apiResponse.response.length
+      })
     };
 
   } catch (error) {
+
+    console.error("fetchFixtures ERROR:", error);
+
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error.message })
