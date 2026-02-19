@@ -2,92 +2,76 @@
 <html>
 <head>
   <title>Smart Football Predictions</title>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    h1 { margin-bottom: 10px; }
+    .card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
 
 <h1>Smart Football Predictions</h1>
 
+<h2>Upcoming Matches</h2>
 <div id="matches"></div>
-<div id="prediction"></div>
+
+<h2>Latest Blogs</h2>
 <div id="blogs"></div>
 
 <script>
+async function loadMatches() {
+  try {
+    const res = await fetch('/.netlify/functions/getMatches');
+    const data = await res.json();
 
-const API = {
-  matches: "/.netlify/functions/getMatches",
-  prediction: "/.netlify/functions/getPrediction",
-  blogs: "/.netlify/functions/getBlogs"
-};
+    const container = document.getElementById('matches');
+    container.innerHTML = '';
 
-async function apiGet(url){
-  try{
-    const r = await fetch(url);
-    if(!r.ok) throw new Error("API error");
-    return await r.json();
-  }catch(e){
-    console.error(e);
-    return null;
+    data.matches.forEach(match => {
+      container.innerHTML += `
+        <div class="card">
+          <strong>${match.home}</strong> vs <strong>${match.away}</strong>
+          <br>
+          Fixture ID: ${match.fixture}
+        </div>
+      `;
+    });
+
+  } catch (err) {
+    console.error(err);
   }
 }
 
-async function loadMatches(){
-  const data = await apiGet(API.matches);
-  const container = document.getElementById("matches");
+async function loadBlogs() {
+  try {
+    const res = await fetch('/.netlify/functions/getBlogs');
+    const data = await res.json();
 
-  if(!data || !data.matches){
-    container.innerHTML = "No matches available";
-    return;
+    const container = document.getElementById('blogs');
+    container.innerHTML = '';
+
+    data.blogs.forEach(blog => {
+      container.innerHTML += `
+        <div class="card">
+          <h3>${blog.title}</h3>
+          <p>${blog.content.substring(0, 200)}...</p>
+        </div>
+      `;
+    });
+
+  } catch (err) {
+    console.error(err);
   }
-
-  container.innerHTML = data.matches.map(m => `
-    <div>
-      <h3>${m.home} vs ${m.away}</h3>
-      <button onclick="loadPrediction('${m.fixture}')">
-        View Prediction
-      </button>
-    </div>
-  `).join("");
-}
-
-async function loadPrediction(fixture){
-  const data = await apiGet(API.prediction + "?fixture=" + fixture);
-  const container = document.getElementById("prediction");
-
-  if(!data){
-    container.innerHTML = "Prediction unavailable";
-    return;
-  }
-
-  container.innerHTML = `
-    <h2>Prediction</h2>
-    <p>Winner: ${data.winner}</p>
-    <p>Goals: ${data.goals}</p>
-    <p>Corners: ${data.corners}</p>
-    <p>Yellow Cards: ${data.cards}</p>
-  `;
-}
-
-async function loadBlogs(){
-  const data = await apiGet(API.blogs);
-  const container = document.getElementById("blogs");
-
-  if(!data || !data.blogs){
-    container.innerHTML = "No blogs";
-    return;
-  }
-
-  container.innerHTML = data.blogs.map(b => `
-    <div>
-      <h3>${b.title}</h3>
-      <p>${b.content}</p>
-    </div>
-  `).join("");
 }
 
 loadMatches();
 loadBlogs();
-
 </script>
 
 </body>
