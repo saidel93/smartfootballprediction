@@ -8,9 +8,8 @@ exports.handler = async (event) => {
   }
 
   try {
-    const fetch = (await import('node-fetch')).default;
-
     const API_KEY = process.env.FOOTBALL_API_KEY;
+
     if (!API_KEY) {
       return {
         statusCode: 500,
