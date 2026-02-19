@@ -15,9 +15,7 @@
   "scripts": {
     "dev": "netlify dev",
     "build": "echo 'No build step — static HTML site'",
-    "test:fixtures": "curl -s http://localhost:8888/.netlify/functions/fetchFixtures | python3 -m json.tool",
-    "test:matches": "curl -s http://localhost:8888/.netlify/functions/getMatches | python3 -m json.tool",
-    "test:blogs": "curl -s http://localhost:8888/.netlify/functions/getBlogs | python3 -m json.tool",
-    "test:accuracy": "curl -s http://localhost:8888/.netlify/functions/getAccuracy | python3 -m json.tool"
+    "test:fixtures": "curl -s http://localhost:8888/.netlify/functions/getMatches | python3 -m json.tool",
+    "test:blogs": "curl -s http://localhost:8888/.netlify/functions/getBlogs | python3 -m json.tool"
   }
 }
