@@ -111,10 +111,9 @@ exports.handler = async (event, context) => {
         // process.env.FOOTBALL_API_KEY is your API key from
         // api-football.com, stored safely in Netlify env vars.
         // It NEVER appears in your frontend code.
-        const response = await apiGet(url, {
-          'x-apisports-key': API_KEY,
-          'x-rapidapi-host': 'v3.football.api-sports.io'
-        });
+       const response = await apiGet(url, {
+  'x-apisports-key': API_KEY
+});
 
         if (!response.response) continue;
 
